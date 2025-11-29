@@ -1,0 +1,38 @@
+.sell-container {
+  max-width: 750px;
+}
+
+.sell-card {
+  border-radius: 20px;
+  background: white;
+  border: none;
+}
+
+.title {
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.input-box {
+  border-radius: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  transition: all 0.2s ease-in-out;
+}
+
+.input-box:focus {
+  border-color: #1abc9c;
+  box-shadow: 0 0 8px rgba(26, 188, 156, 0.4);
+}
+
+.sell-btn {
+  padding: 10px;
+  font-size: 18px;
+  border-radius: 12px;
+  transition: 0.3s ease;
+}
+
+.sell-btn:hover {
+  background-color: #0d8d4f !important;
+  transform: translateY(-2px);
+}

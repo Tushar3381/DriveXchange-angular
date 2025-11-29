@@ -1,0 +1,31 @@
+<div class="container">
+  <h2>Edit Car</h2>
+  <form (ngSubmit)="onSubmit()">
+    <div>
+      <label>Brand:</label>
+      <input type="text" [(ngModel)]="car.brand" name="brand" required />
+    </div>
+    <div>
+      <label>Model:</label>
+      <input type="text" [(ngModel)]="car.model" name="model" required />
+    </div>
+    <div>
+      <label>Color:</label>
+      <input type="text" [(ngModel)]="car.color" name="color" required />
+    </div>
+    <div>
+      <label>Price:</label>
+      <input type="number" [(ngModel)]="car.price" name="price" required />
+    </div>
+    <div>
+      <label>Description:</label>
+      <textarea [(ngModel)]="car.description" name="description"></textarea>
+    </div>
+    <div>
+      <label>Upload New Image (optional):</label>
+      <input type="file" (change)="onFileSelected($event)" />
+    </div>
+
+    <button type="submit">Update Car</button>
+  </form>
+</div>

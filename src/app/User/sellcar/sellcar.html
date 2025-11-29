@@ -1,0 +1,71 @@
+<div class="sell-container container mt-5">
+
+  <div class="card sell-card shadow-lg p-4">
+    <h2 class="text-center mb-4 title">Sell Your Car</h2>
+
+    <form (ngSubmit)="sellCar()">
+
+      <div class="row">
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label fw-bold">Owner Name</label>
+          <input type="text" class="form-control input-box" [(ngModel)]="ownerName" name="ownerName" required />
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label fw-bold">Contact Number</label>
+          <input type="text" class="form-control input-box" [(ngModel)]="contactNumber" name="contactNumber" required />
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label fw-bold">Car Brand</label>
+          <input type="text" class="form-control input-box" [(ngModel)]="brand" name="brand" required />
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label fw-bold">Car Model</label>
+          <input type="text" class="form-control input-box" [(ngModel)]="model" name="model" required />
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label fw-bold">Manufacturing Year</label>
+          <input type="number" class="form-control input-box" [(ngModel)]="year" name="year" required />
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label fw-bold">Fuel Type</label>
+          <select class="form-control input-box" [(ngModel)]="fuelType" name="fuelType" required>
+            <option value="">Select</option>
+            <option value="Petrol">Petrol</option>
+            <option value="Diesel">Diesel</option>
+            <option value="CNG">CNG</option>
+            <option value="Electric">Electric</option>
+          </select>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label fw-bold">Expected Price (₹)</label>
+          <input type="number" class="form-control input-box" [(ngModel)]="price" name="price" required />
+        </div>
+
+        <div class="col-md-12 mb-3">
+          <label class="form-label fw-bold">Description</label>
+          <textarea class="form-control input-box" [(ngModel)]="description" name="description" rows="3"></textarea>
+        </div>
+
+        <div class="col-md-12 mb-3">
+          <label class="form-label fw-bold">Upload Car Images</label>
+          <input type="file" class="form-control input-box" (change)="onImageSelected($event)" multiple required />
+          <small class="text-muted">You can upload one or multiple images</small>
+        </div>
+
+      </div>
+
+      <button class="btn btn-success w-100 sell-btn" type="submit">
+        <i class="bi bi-upload"></i> Submit to DriveXchange
+      </button>
+    </form>
+
+    <p class="text-success mt-3 text-center">{{ message }}</p>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+<!-- User Dashboard Navigation -->
+ <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+  <a class="navbar-brand text-white" routerLink="/User/dashboard">
+    <strong>DriveXchange User</strong>
+  </a>
+
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav ms-auto">
+      <li class="nav-item">
+        <!-- <a class="nav-link text-white" routerLink="/User/buy">Buy Car</a> -->
+      </li>
+      <li class="nav-item">
+        <!-- <a class="nav-link text-white" routerLink="/User/sell">Sell Car</a> -->
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-warning" routerLink="/User/login">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav> 
+
+<!-- Dashboard Body -->
+<div class="container mt-5">
+  <div class="card shadow p-4">
+    <h2 class="text-center mb-4">Welcome to DriveXchange</h2>
+
+    <div class="row text-center">
+
+      <div class="col-md-6 mb-4">
+        <div class="card p-3 shadow-sm">
+          <h4>Buy a Car</h4>
+          <p>Explore available cars to buy.</p>
+          <button class="btn btn-primary w-100" routerLink="/User/buycar">Browse Cars</button>
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-4">
+        <div class="card p-3 shadow-sm">
+          <h4>Sell Your Car</h4>
+          <p>List your old car for sale.</p>
+          <button class="btn btn-success w-100" routerLink="/User/sellcar">Sell Car</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

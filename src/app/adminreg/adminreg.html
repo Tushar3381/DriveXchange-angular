@@ -1,0 +1,47 @@
+<!-- <h2>Admin Sign Up</h2>
+
+<form (ngSubmit)="onSubmit()">
+  <label>Name:</label>
+  <input type="text" [(ngModel)]="adminName" name="name" required />
+
+  <label>Email:</label>
+  <input type="email" [(ngModel)]="adminEmail" name="email" required />
+
+  <label>Password:</label>
+  <input type="password" [(ngModel)]="adminPassword" name="password" required />
+
+  <button type="submit">Register</button>
+</form>
+
+<p>Already registered? <a routerLink="/login">Login here</a></p> -->
+
+<h2>Admin Sign Up</h2>
+
+<form #form="ngForm" (ngSubmit)="onSubmit(form)">
+  <label>Name:</label>
+  <input type="text" [(ngModel)]="adminName" name="name" required />
+  <div *ngIf="form.submitted && !form.controls['name']?.valid" style="color:red;">
+    Name is required
+  </div>
+
+  <label>Email:</label>
+  <input type="email" [(ngModel)]="adminEmail" name="email" required />
+  <div *ngIf="form.submitted && !form.controls['email']?.valid" style="color:red;">
+    Valid email is required
+  </div>
+
+  <label>Password:</label>
+  <input type="password" [(ngModel)]="adminPassword" name="password" required />
+  <div *ngIf="form.submitted && !form.controls['password']?.valid" style="color:red;">
+    Password is required
+  </div>
+
+  <button type="submit">Register</button>
+</form>
+<!-- <p>Already registered? <button (click)="handleclick()" routerLink="Login">Login</button></p> -->
+
+
+<!-- <a>Already registered?  <a routerLink="/Login">Login </a></a> -->
+
+
+

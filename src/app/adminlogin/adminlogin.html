@@ -1,0 +1,32 @@
+  <!-- <div class="signup-container">
+  <h3>Login Form</h3>
+
+  <form>
+     <label for="AdminName">Admin Name:</label>
+    <input type="text" placeholder="Admin Name" required /> 
+    <label for="AdminEmail">Admin Email:</label>
+    <input type="email" placeholder="Admin Email" required />
+
+    <label for="AdminPassword">Admin Password:</label>
+    <input type="password" placeholder="Admin Password" required />
+
+    <button (click)="goToDashboard()">Login</button>
+  </form>
+</div>
+    -->
+
+    <div class="signup-container">
+  <h3>Login Form</h3>
+
+  <form (ngSubmit)="goToDashboard()">
+    <label for="AdminEmail">Admin Email:</label>
+    <input type="email" [(ngModel)]="aemail" name="aemail" placeholder="Admin Email" required />
+     
+    <label for="AdminPassword">Admin Password:</label>
+    <input type="password" [(ngModel)]="apass" name="apass" placeholder="Admin Password" required />
+
+    <button type="submit">Login</button>
+  </form>
+
+  <p *ngIf="errorMessage" style="color:red;">{{ errorMessage }}</p>
+</div>

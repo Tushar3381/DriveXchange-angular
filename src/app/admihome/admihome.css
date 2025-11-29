@@ -1,0 +1,38 @@
+For body and html to use full height
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Full-page layout */
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Navbar and footer should have fixed heights */
+app-navbar {
+  height: 60px;
+  flex-shrink: 0;
+}
+
+app-footer {
+  height: 60px;
+  flex-shrink: 0;
+}
+
+/* Content fills remaining space */
+.content {
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Image fits perfectly */
+.content img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* or 'contain' if you want full image without crop */
+  display: block;
+}

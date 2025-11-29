@@ -1,0 +1,41 @@
+<!-- admin-dashboard.component.html -->
+
+<div class="layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2 class="logo">🚗 AutoAdmin</h2>
+    
+    <ul class="nav-links">
+      <li><a routerLink="/dash" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <span>📊</span> Dashboard
+      </a></li>
+
+      <li><a routerLink="/dash/carslist" routerLinkActive="active">
+        <span>🚘</span> Car List
+      </a></li>
+
+      <li><a routerLink="/dash/add-car" routerLinkActive="active">
+        <span>➕</span> Add Car
+      </a></li>
+
+      <li><a routerLink="/dash/adminapprove-car" routerLinkActive="active">
+        <span>⚙️</span> Manage Cars
+      </a></li>
+    </ul>
+  </aside>
+
+  <!-- Content Area -->
+  <div class="main-content">
+    
+    <header class="topbar">
+      <h2>Welcome Admin</h2>
+     
+      <button class="logout-btn" (click)="logout()">Logout</button>
+    </header>
+
+    <section class="content-area">
+      <router-outlet></router-outlet>
+    </section>
+  </div>
+</div>

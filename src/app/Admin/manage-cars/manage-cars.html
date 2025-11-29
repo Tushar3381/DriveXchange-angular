@@ -1,0 +1,63 @@
+<table class="table table-bordered table-striped mt-3">
+  <thead class="table-dark">
+    <tr>
+      <th>ID</th>
+      <th>Brand</th>
+      <th>Description</th>
+      <th>Model</th>
+      <th>Owner</th>
+      <th>Fuel</th>
+      <th>Contact </th>
+      <th>Price</th>
+      <th>Image</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let car of filteredCars">
+      <td>{{ car.id }}</td>
+      <td>{{ car.brand }}</td>
+      <td>{{ car.description }}</td>
+      <td>{{ car.model }}</td>
+      <td>{{ car.ownerName }}</td>
+      <td>{{ car.fuelType }}</td>
+      <td>{{ car.contactNumber }}</td>
+      <td>{{ car.price }}</td>
+
+      <!-- Image Preview -->
+      <td>
+        <img 
+          [src]="'http://localhost:8080/uploads/' + car.image" 
+          alt="Car Image" 
+          width="80" 
+          height="60"
+          style="object-fit: cover; border-radius: 5px;"
+        >
+      </td>
+
+      <!-- Status Badge -->
+      <td>
+        <span class="badge bg-warning" *ngIf="car.status === 'PENDING'">Pending</span>
+        <span class="badge bg-success" *ngIf="car.status === 'APPROVED'">Approved</span>
+        <span class="badge bg-danger" *ngIf="car.status === 'REJECTED'">Rejected</span>
+      </td>
+
+      <!-- Approve / Reject Buttons -->
+      <td>
+        <button class="btn btn-success btn-sm me-2"
+                (click)="updateStatus(car.id, 'APPROVED')"
+                [disabled]="car.status === 'APPROVED'">
+          Approve
+        </button>
+
+        <button class="btn btn-danger btn-sm"
+                (click)="updateStatus(car.id, 'REJECTED')"
+                [disabled]="car.status === 'REJECTED'">
+          Reject
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

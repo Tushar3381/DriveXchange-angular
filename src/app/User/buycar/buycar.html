@@ -1,0 +1,39 @@
+<div class="container py-4">
+
+  <h2 class="text-center mb-4 fw-bold">Available Cars</h2>
+
+  <div class="row g-4">
+
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let car of cars">
+
+      <div class="card shadow-sm car-card h-100">
+
+        <!-- Car Image -->
+        <img 
+          class="card-img-top car-img"
+          [src]="'http://localhost:8080/cars/uploads/' + car.imageUrl"
+          alt="{{ car.brand }} {{ car.model }}"
+        />
+
+        <div class="card-body">
+          <h5 class="card-title fw-semibold">
+            {{ car.brand }} {{ car.model }}
+          </h5>
+
+          <p class="card-text small text-muted">
+            <strong>Price:</strong> ₹{{ car.price }} <br />
+            <strong>Year:</strong> {{ car.year }}
+          </p>
+
+          <button class="btn btn-primary w-100 mt-2" (click)="buyNow(car)">
+            Buy Now
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
