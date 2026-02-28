@@ -1,59 +1,91 @@
 # DriveXchange
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.1.
+DriveXchange is a full-stack project with:
+- Angular frontend (this repository root)
+- Spring Boot backend (`backend/`)
 
-## Development server
+## Project Structure
 
-To start a local development server, run:
+- `src/` - Angular application source code
+- `backend/` - Spring Boot application source code
+
+## Prerequisites
+
+- Node.js (LTS) + npm
+- Angular CLI (`npm install -g @angular/cli`)
+- Java 17
+- Maven (or use `mvnw` inside `backend/`)
+- PostgreSQL
+
+## Backend Setup (Spring Boot)
+
+1. Go to backend folder:
+
+```bash
+cd backend
+```
+
+2. Configure database in `backend/src/main/resources/application.properties`.
+
+3. Run backend:
+
+```bash
+./mvnw spring-boot:run
+```
+
+Windows PowerShell:
+
+```powershell
+.\mvnw.cmd spring-boot:run
+```
+
+Backend default URL: `http://localhost:8080`
+
+## Frontend Setup (Angular)
+
+1. From repository root, install dependencies:
+
+```bash
+npm install
+```
+
+2. Start Angular app:
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Frontend URL: `http://localhost:4200`
 
-## Code scaffolding
+## Run Full Stack Locally
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+1. Start PostgreSQL
+2. Start backend (`backend/`)
+3. Start frontend (repo root)
+4. Open `http://localhost:4200`
 
-```bash
-ng generate component component-name
-```
+## Build
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+Frontend build:
 
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+Backend build:
 
 ```bash
-ng test
+cd backend
+./mvnw clean package
 ```
 
-## Running end-to-end tests
+Windows PowerShell:
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
+```powershell
+.\mvnw.cmd clean package
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Notes
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Do not commit real DB passwords or secrets. Use environment variables or local-only config.
+- If CORS issues occur, verify backend CORS configuration and frontend API base URL.
