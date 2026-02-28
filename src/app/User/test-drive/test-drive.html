@@ -1,0 +1,84 @@
+<div class="container py-5">
+
+  <!-- Header -->
+  <div class="text-center mb-4">
+    <h2 class="fw-bold">Request a Test Drive</h2>
+    <p class="text-muted">
+      Schedule your preferred date and we’ll contact you shortly
+    </p>
+  </div>
+
+  <div class="row justify-content-center">
+
+    <div class="col-lg-6 col-md-8 col-sm-10">
+
+      <div class="card shadow-sm border-0 p-4 testdrive-card">
+
+        <form (ngSubmit)="submitRequest()" #testDriveForm="ngForm">
+
+          <!-- Car ID -->
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Car ID</label>
+            <input type="number"
+                   class="form-control readonly-field"
+                   [(ngModel)]="formData.carId"
+                   name="carId"
+                   readonly>
+          </div>
+
+          <!-- User Name -->
+          <div class="mb-3">
+            <label class="form-label fw-semibold">User Name</label>
+            <input type="text"
+                   class="form-control readonly-field"
+                   [(ngModel)]="formData.userName"
+                   name="userName"
+                   readonly>
+          </div>
+
+          <!-- Contact -->
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Contact Number</label>
+            <input type="text"
+                   class="form-control readonly-field"
+                   [(ngModel)]="formData.contactnumber"
+                   name="contactNumber"
+                   readonly>
+          </div>
+
+          <!-- Preferred Date -->
+          <div class="mb-4">
+            <label class="form-label fw-semibold">Preferred Date</label>
+            <input type="date"
+                   class="form-control"
+                   [(ngModel)]="formData.preferredDate"
+                   name="preferredDate"
+                   required>
+          </div>
+
+          <!-- Buttons -->
+          <div class="d-flex flex-wrap gap-2">
+
+            <button type="submit"
+                    class="btn btn-primary px-4"
+                    [disabled]="!testDriveForm.valid">
+              Submit Request
+            </button>
+
+            <button type="button"
+                    class="btn btn-outline-secondary px-4"
+                    (click)="goBack()">
+              Cancel
+            </button>
+
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

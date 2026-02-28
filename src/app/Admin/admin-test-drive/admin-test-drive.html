@@ -1,0 +1,40 @@
+<table class="table table-bordered mt-3">
+  <thead class="table-dark">
+    <tr>
+      <th>ID</th>
+      <th>Car</th>
+      <th>User Name</th>
+      <th>contactnumber</th>
+      <th>Date</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let req of requests">
+      <td>{{ req.id }}</td>
+
+      <td>
+        {{ req.carBrand }} {{ req.carModel }}
+      </td>
+
+      <td>{{ req.userName }}</td>
+      <td>{{ req.contactnumber }}</td>
+      <td>{{ req.preferredDate }}</td>
+      <td>{{ req.status }}</td>
+
+      <td>
+        <button class="btn btn-success btn-sm me-2"
+                (click)="updateStatus(req.id, 'APPROVED')">
+          Approve
+        </button>
+
+        <button class="btn btn-danger btn-sm"
+                (click)="updateStatus(req.id, 'REJECTED')">
+          Reject
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

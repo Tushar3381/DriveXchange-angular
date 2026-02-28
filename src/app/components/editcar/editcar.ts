@@ -52,7 +52,7 @@ onSubmit(): void {
     this.carService.updateCar(this.car.id, this.car, this.selectedImage).subscribe({
       next: () => {
         alert('Car updated successfully!');
-        this.router.navigate(['/cars']); // back to list
+        this.router.navigate(['/dash/carslist']); // back to list
       },
       error: (err) => {
         console.error('Error updating car:', err);

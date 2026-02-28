@@ -1,47 +1,108 @@
 <!-- User Dashboard Navigation -->
- <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
   <a class="navbar-brand text-white" routerLink="/User/dashboard">
     <strong>DriveXchange User</strong>
   </a>
 
-  <div class="collapse navbar-collapse">
-    <ul class="navbar-nav ms-auto">
-      <li class="nav-item">
-        <!-- <a class="nav-link text-white" routerLink="/User/buy">Buy Car</a> -->
-      </li>
-      <li class="nav-item">
-        <!-- <a class="nav-link text-white" routerLink="/User/sell">Sell Car</a> -->
-      </li>
-      <li class="nav-item">
-        <a class="nav-link text-warning" routerLink="/User/login">Logout</a>
-      </li>
-    </ul>
+  <ul class="navbar-nav ms-auto">
+
+    <li class="nav-item">
+      <a class="nav-link text-info" (click)="goToProfile()">
+        User Profile
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link text-warning" (click)="logout()">
+        Logout
+      </a>
+    </li>
+
+  </ul>
+</nav>
+
+
+<section class="bg-light py-5 border-bottom">
+  <div class="container text-center">
+
+    <h2 class="fw-bold">
+      Welcome back, <span class="text-primary">{{ loggedUserName }}</span> 👋
+    </h2>
+
+    <p class="text-muted mt-2">
+      Manage your car buying and selling activities easily.
+    </p>
+
   </div>
-</nav> 
+</section>
 
-<!-- Dashboard Body -->
-<div class="container mt-5">
-  <div class="card shadow p-4">
-    <h2 class="text-center mb-4">Welcome to DriveXchange</h2>
+<!-- ================= DASHBOARD CARDS ================= -->
+<div class="container my-5">
 
-    <div class="row text-center">
+  <div class="row g-4">
 
-      <div class="col-md-6 mb-4">
-        <div class="card p-3 shadow-sm">
-          <h4>Buy a Car</h4>
-          <p>Explore available cars to buy.</p>
-          <button class="btn btn-primary w-100" routerLink="/User/buycar">Browse Cars</button>
+    <!-- Buy New Car -->
+    <div class="col-lg-4 col-md-6">
+      <div class="card dashboard-card h-100 border-0 shadow-sm text-center p-4">
+
+        <div class="icon-box bg-primary text-white mb-3">
+          🚗
         </div>
-      </div>
 
-      <div class="col-md-6 mb-4">
-        <div class="card p-3 shadow-sm">
-          <h4>Sell Your Car</h4>
-          <p>List your old car for sale.</p>
-          <button class="btn btn-success w-100" routerLink="/User/sellcar">Sell Car</button>
-        </div>
-      </div>
+        <h5 class="fw-semibold">Buy New Car</h5>
+        <p class="text-muted">
+          Explore brand-new cars added by admin.
+        </p>
 
+        <button class="btn btn-primary mt-auto"
+                routerLink="/User/buy-new-car">
+          Browse New Cars
+        </button>
+
+      </div>
     </div>
+
+    <!-- Buy Second Hand Car -->
+    <div class="col-lg-4 col-md-6">
+      <div class="card dashboard-card h-100 border-0 shadow-sm text-center p-4">
+
+        <div class="icon-box bg-warning text-white mb-3">
+          🚘
+        </div>
+
+        <h5 class="fw-semibold">Buy Second-Hand Car</h5>
+        <p class="text-muted">
+          View admin-approved pre-owned cars.
+        </p>
+
+        <button class="btn btn-warning mt-auto"
+                routerLink="/User/buy-second-hand">
+          Browse Used Cars
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Sell Car -->
+    <div class="col-lg-4 col-md-6">
+      <div class="card dashboard-card h-100 border-0 shadow-sm text-center p-4">
+
+        <div class="icon-box bg-success text-white mb-3">
+          💰
+        </div>
+
+        <h5 class="fw-semibold">Sell Your Car</h5>
+        <p class="text-muted">
+          List your car and connect with buyers quickly.
+        </p>
+
+        <button class="btn btn-success mt-auto"
+                routerLink="/User/sellcar">
+          Sell Car
+        </button>
+
+      </div>
+    </div>
+
   </div>
 </div>

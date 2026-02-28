@@ -1,0 +1,70 @@
+<div class="container mt-4" *ngIf="car">
+
+  <h2 class="text-center mb-4">
+    {{ car.brand }} {{ car.model }}
+  </h2>
+
+  <!-- IMAGE GALLERY -->
+  <div class="row mb-4">
+    <div class="col-md-4 mb-3" *ngFor="let img of images">
+      <img
+        [src]="getImageUrl(img)"
+        class="img-fluid rounded shadow"
+        style="height:200px; width:100%; object-fit:cover;"
+      />
+    </div>
+  </div>
+
+  <!-- CAR DETAILS -->
+  <div class="card shadow p-3">
+    <h4>Car Information</h4>
+
+    <table class="table table-bordered mt-3">
+      <tr>
+        <th>Brand</th>
+        <td>{{ car.brand }}</td>
+      </tr>
+
+      <tr>
+        <th>Model</th>
+        <td>{{ car.model }}</td>
+      </tr>
+
+      <tr>
+        <th>Year</th>
+        <td>{{ car.year }}</td>
+      </tr>
+
+      <tr>
+        <th>Fuel Type</th>
+        <td>{{ car.fuelType }}</td>
+      </tr>
+
+      <tr>
+        <th>Price</th>
+        <td>₹{{ car.price }}</td>
+      </tr>
+
+      <tr>
+        <th>Description</th>
+        <td>{{ car.description }}</td>
+      </tr>
+
+      <tr>
+        <th>Owner Name</th>
+        <td>{{ car.ownerName }}</td>
+      </tr>
+
+      <tr>
+        <th>Contact Number</th>
+        <td>{{ car.contactNumber }}</td>
+      </tr>
+    </table>
+
+    <button class="btn btn-success w-100">
+      Contact Seller
+    </button>
+
+  </div>
+
+</div>

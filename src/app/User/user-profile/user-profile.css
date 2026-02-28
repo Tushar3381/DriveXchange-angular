@@ -1,0 +1,12 @@
+.profile-card {
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.profile-card:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.form-control {
+  border-radius: 8px;
+}

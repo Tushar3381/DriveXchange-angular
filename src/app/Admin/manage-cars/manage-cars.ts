@@ -1,18 +1,18 @@
-import { NgModule } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { SellCarService } from '../../service/sell-car.Service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-
-import { Component, OnInit } from '@angular/core';
-import { CarService } from '../../car.service';
-
-
 @Component({
   selector: 'app-manage-cars',
-   imports: [
-    CommonModule,
-    FormsModule 
+
+   standalone: true,         
+  imports: [
+    CommonModule,            
+    FormsModule
   ],
+
+
   templateUrl: './manage-cars.html',
   styleUrls: ['./manage-cars.css']
 })
@@ -22,21 +22,21 @@ export class ManageCarsComponent implements OnInit {
   filteredCars: any[] = [];
   filterStatus = "ALL";
 
-  constructor(private carservice: CarService) {}
+  constructor(private sellCarService: SellCarService) {}
 
   ngOnInit() {
     this.loadCars();
   }
 
   loadCars() {
-    this.carservice.getAllCars().subscribe((data: any) => {
+    this.sellCarService.getAllCar().subscribe(data => {
       this.cars = data;
       this.applyFilter();
     });
   }
 
   applyFilter() {
-    if (this.filterStatus === "ALL") {
+    if (this.filterStatus === 'ALL') {
       this.filteredCars = this.cars;
     } else {
       this.filteredCars = this.cars.filter(car => car.status === this.filterStatus);
@@ -44,16 +44,14 @@ export class ManageCarsComponent implements OnInit {
   }
 
   updateStatus(id: number, status: string) {
-  if (status === 'APPROVED') {
-    this.carservice.approveCar(id).subscribe(() => {
-      alert('Car approved successfully');
-      this.loadCars();
-    });
-  } else {
-    this.carservice.rejectCar(id).subscribe(() => {
-      alert('Car rejected');
-      this.loadCars();
-    });
-  }
+    if (status === 'APPROVED') {
+      this.sellCarService.approveCar(id).subscribe(() => {
+        this.loadCars();
+      });
+    } else {
+      this.sellCarService.rejectCar(id).subscribe(() => {
+        this.loadCars();
+      });
+    }
   }
 }

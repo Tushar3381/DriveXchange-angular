@@ -33,33 +33,36 @@ export class SellCar {
   }
 
   sellCar() {
+  const formData = new FormData();
 
-    const carData = {
-      brand: this.brand,
-      model: this.model,
-      year: this.year,
-      price: this.price,
-      ownerName: this.ownerName,
-      contactNumber: this.contactNumber,
-      fuelType: this.fuelType,
-      description: this.description
-    };
+  formData.append('brand', this.brand);
+  formData.append('model', this.model);
+  formData.append('year', this.year?.toString() ?? '');
+  formData.append('price', this.price?.toString() ?? '');
+  formData.append('ownerName', this.ownerName);
+  formData.append('contactNumber', this.contactNumber);
+  formData.append('fuelType', this.fuelType);
+   formData.append('description', this.description);
 
-    const formData = new FormData();
-    formData.append("car", new Blob([JSON.stringify(carData)], { type: "application/json" }));
+  this.images.forEach(img => {
+    formData.append('images', img);
+  });
 
-    this.images.forEach(img => {
-      formData.append("images", img);
-    });
-
-    this.http.post("http://localhost:8080/sellcar/submit", formData)
-      .subscribe(
-        res => {
-          this.message = "Car posted successfully and awaiting admin approval!";
-        },
-        err => {
-          console.error("Error uploading:", err);
-        }
-      );
+  this.http.post(
+  'http://localhost:8080/sellcar/submit',
+  formData,
+  { responseType: 'text' }
+).subscribe({
+  next: (res) => {
+    alert('Car is submitted. Please wait for approval from DriveXchange.');
+    this.message = res;
+  },
+  error: err => {
+    console.error(err);
   }
+});
+
+
+}
+
 }

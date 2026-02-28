@@ -1,0 +1,31 @@
+.testdrive-card {
+  border-radius: 14px;
+  transition: all 0.3s ease;
+}
+
+.testdrive-card:hover {
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.form-control {
+  border-radius: 8px;
+}
+
+.readonly-field {
+  background-color: #f8f9fa;
+  font-weight: 500;
+}
+
+.btn-primary {
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 576px) {
+  .testdrive-card {
+    padding: 20px !important;
+  }
+}

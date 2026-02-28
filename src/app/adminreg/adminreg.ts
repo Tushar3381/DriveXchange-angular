@@ -79,7 +79,7 @@ export class Adminreg {
       (response) => {
         console.log('Signup successful:', response);
         alert("Signup successful!");
-        this.router.navigate(['Login']); // make sure 'login' route is correctly configured
+        this.router.navigate(['/Admin/login']); // Redirect to the Admin_Login
       },
       (error) => {
         console.error('Signup failed:', error);

@@ -1,0 +1,71 @@
+<div class="container py-5" *ngIf="car">
+
+  <div class="row g-5 align-items-start">
+
+    <!-- Image Section -->
+    <div class="col-lg-6">
+
+      <div class="image-container shadow-sm rounded overflow-hidden">
+        <img
+          [src]="'http://localhost:8080/uploads/' + car.imageUrl"
+          alt="Car Image"
+          class="img-fluid main-image"
+        />
+      </div>
+
+    </div>
+
+    <!-- Details Section -->
+    <div class="col-lg-6">
+
+      <div class="car-details">
+
+        <h2 class="fw-bold mb-3">
+          {{ car.brand }} {{ car.model }}
+        </h2>
+
+        <h3 class="price-tag mb-4">
+          ₹{{ car.price | number }}
+        </h3>
+
+        <hr>
+
+        <div class="specs mt-3">
+
+          <p>
+            <strong>Color:</strong>
+            <span class="text-muted"> {{ car.color }} </span>
+          </p>
+
+          <p>
+            <strong>Description:</strong>
+          </p>
+
+          <p class="text-muted">
+            {{ car.description }}
+          </p>
+
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="d-flex flex-wrap gap-3 mt-4">
+
+          <button class="btn btn-outline-primary px-4 py-2"
+                  (click)="goToTestDrive()">
+            🚗 Book Test Drive
+          </button>
+
+          <button class="btn btn-success px-4 py-2"
+                  (click)="buyCar()">
+            💳 Buy Now
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

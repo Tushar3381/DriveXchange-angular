@@ -1,0 +1,16 @@
+<div class="container mt-5" *ngIf="car">
+
+  <h2>Payment Summary</h2>
+
+  <div class="card p-4 mt-3">
+    <h4>{{ car.brand }} {{ car.model }}</h4>
+
+    <p><strong>Price:</strong> ₹{{ car.price }}</p>
+
+    <button class="btn btn-primary" (click)="startPayment()">
+      Pay Now
+    </button>
+
+  </div>
+
+</div>
