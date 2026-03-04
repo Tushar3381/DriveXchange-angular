@@ -1,30 +1,52 @@
- <div class="navbar" >
-    <h1>DriveXchange Admin</h1>
-    <div class="nav-links">
-       <!-- <a routerLink="Home">Home</a>  -->
+@if (showGlobalShell) {
+  <header class="dx-header">
+    <div class="dx-header__container">
+      <a class="dx-brand" routerLink="/User/dashboard">
+        <span class="dx-brand__logo">DX</span>
+        <span class="dx-brand__text">
+          DriveXchange
+          <small>Smart Car Marketplace</small>
+        </span>
+      </a>
 
-       <!-- Admin Signup -->
-        <a routerLink="Admin/signup"> Admin SignUp</a> 
+      <nav class="dx-nav">
+        <a routerLink="/" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="is-active">Home</a>
+        <a routerLink="/User/buy-new-car" routerLinkActive="is-active">New Cars</a>
+        <a routerLink="/User/buy-second-hand" routerLinkActive="is-active">Used Cars</a>
+        <a routerLink="/User/sellcar" routerLinkActive="is-active">Sell Car</a>
+        <a routerLink="/User/dashboard" routerLinkActive="is-active">Dashboard</a>
+      </nav>
 
-        <!-- Admin Login -->
-       <a routerLink="Admin/login">Admin Login</a> 
-
-
-<!-- User registration -->
-    <a routerLink="/User/register">User Register</a>
-
-    <!-- User login -->
-    <a routerLink="/User/login">User Login</a>
-
+      <div class="dx-auth-links">
+        <a class="dx-link" routerLink="/User/login">Login</a>
+        <a class="dx-btn" routerLink="/User/register">Create Account</a>
+      </div>
     </div>
-  </div>
+  </header>
+}
 
-<router-outlet></router-outlet>
+<main class="dx-main" [class.dx-main--framed]="showGlobalShell">
+  <router-outlet></router-outlet>
+</main>
 
-<footer  class="footer">
-  <p>&copy; 2025 DriveXchange | Admin Panel | All Rights Reserved</p>
-</footer>
+@if (showGlobalShell) {
+  <footer class="dx-footer">
+    <div class="dx-footer__container">
+      <div class="dx-footer__brand">
+        <h3>DriveXchange</h3>
+        <p>Trusted marketplace for buying and selling cars with confidence.</p>
+      </div>
 
- 
+      <div class="dx-footer__links">
+        <a routerLink="/User/buy-new-car">Browse New</a>
+        <a routerLink="/User/buy-second-hand">Browse Used</a>
+        <a routerLink="/User/sellcar">Sell Vehicle</a>
+      </div>
 
+      <div class="dx-footer__copy">
+        <p>&copy; 2026 DriveXchange. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+}
  

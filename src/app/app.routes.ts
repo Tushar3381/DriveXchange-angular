@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { HomeComponent } from './home/home';
 
 // Admin Components
 import { Adminreg } from './adminreg/adminreg';
@@ -57,6 +58,8 @@ import { AuthGuard } from './auth/auth.guard';
 
 
 export const routes: Routes = [
+  { path: "", component: HomeComponent, pathMatch: "full" },
+  { path: "home", redirectTo: "", pathMatch: "full" },
 
   // -------------------------
   // USER ROUTES
@@ -119,11 +122,7 @@ export const routes: Routes = [
     ]
   },
 
-  // -------------------------
-  // DEFAULT ROOT REDIRECT
-  // -------------------------
-  { path: "", redirectTo: "User/login", pathMatch: "full" },
-  { path: "**", redirectTo: "User/login" }
+  { path: "**", redirectTo: "" }
 ];
 
 @NgModule({

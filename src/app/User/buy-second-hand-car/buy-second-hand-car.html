@@ -1,42 +1,62 @@
-<div class="container mt-4">
+<section class="used-shell">
+  <header class="used-hero">
+    <p>Used Car Marketplace</p>
+    <h1>Quality-checked pre-owned cars, ready for your next move.</h1>
+  </header>
 
-  <h2 class="text-center mb-4">Buy Second Hand Cars</h2>
-
-  <div class="row">
-
-    <div class="col-md-4 mb-4" *ngFor="let car of cars">
-
-      <div class="card shadow h-100">
-
-        <img
-          class="card-img-top"
-          [src]="getFirstImage(car.images)"
-          height="200"
-          style="object-fit: cover;"
-        />
-
-        <div class="card-body">
-
-          <h5 class="card-title">
-            {{ car.brand }} {{ car.model }}
-          </h5>
-
-          <p class="card-text">
-            <strong>Year:</strong> {{ car.year }} <br>
-            <strong>Fuel:</strong> {{ car.fuelType }} <br>
-            <strong>Price:</strong> ₹{{ car.price }}
-          </p>
-
-          <button class="btn btn-success w-100"
-                  (click)="viewDetails(car.id)">
-            View Details
-          </button>
-
-        </div>
-      </div>
-
+  <section class="used-filters">
+    <div class="field">
+      <label for="usedSearch">Search make or model</label>
+      <input id="usedSearch" type="text" [(ngModel)]="searchTerm" placeholder="e.g. Swift, Verna, i20" />
     </div>
 
-  </div>
+    <div class="field">
+      <label for="fuelFilter">Fuel type</label>
+      <select id="fuelFilter" [(ngModel)]="fuelFilter">
+        <option value="all">All fuel types</option>
+        <option value="petrol">Petrol</option>
+        <option value="diesel">Diesel</option>
+        <option value="cng">CNG</option>
+        <option value="electric">Electric</option>
+      </select>
+    </div>
 
-</div>
+    <div class="field">
+      <label for="usedSort">Sort by</label>
+      <select id="usedSort" [(ngModel)]="sortBy">
+        <option value="default">Default</option>
+        <option value="priceAsc">Price: Low to High</option>
+        <option value="priceDesc">Price: High to Low</option>
+        <option value="yearDesc">Newest Year</option>
+      </select>
+    </div>
+  </section>
+
+  <p class="result-count">{{ filteredCars.length }} cars available</p>
+
+  <section class="used-grid" *ngIf="filteredCars.length; else emptyState">
+    <article class="used-card" *ngFor="let car of filteredCars">
+      <div class="used-card__media">
+        <img [src]="getFirstImage(car.images)" alt="Used car image" />
+      </div>
+
+      <div class="used-card__body">
+        <h3>{{ car.brand }} {{ car.model }}</h3>
+        <p>
+          <strong>Year:</strong> {{ car.year }}
+          <span class="dot"></span>
+          <strong>Fuel:</strong> {{ car.fuelType }}
+        </p>
+        <p class="price">₹{{ car.price | number }}</p>
+        <button type="button" (click)="viewDetails(car.id)">View Details</button>
+      </div>
+    </article>
+  </section>
+
+  <ng-template #emptyState>
+    <section class="empty-box">
+      <h2>No used cars found.</h2>
+      <p>Try changing the search text, fuel filter, or sorting preference.</p>
+    </section>
+  </ng-template>
+</section>

@@ -1,0 +1,218 @@
+<section
+  id="discover"
+  class="home-hero section-block"
+  [style.background-image]="'linear-gradient(130deg, rgba(5, 20, 36, 0.84), rgba(10, 33, 57, 0.82)), url(' + activeSlide.image + ')'"
+>
+  <div class="home-hero__overlay"></div>
+
+  <div class="home-hero__content">
+    <p class="hero-tag">{{ activeSlide.tag }}</p>
+    <h1>{{ activeSlide.title }}</h1>
+    <p class="hero-subtitle">{{ activeSlide.subtitle }}</p>
+
+    <div class="hero-actions">
+      <a class="btn-solid" routerLink="/User/buy-new-car">Buy Car</a>
+      <a class="btn-ghost" routerLink="/User/sellcar">Sell Your Car</a>
+    </div>
+
+    <div class="hero-stats">
+      <article>
+        <h3>2,500+</h3>
+        <p>Verified Listings</p>
+      </article>
+      <article>
+        <h3>1,200+</h3>
+        <p>Happy Buyers</p>
+      </article>
+      <article>
+        <h3>180+</h3>
+        <p>Dealer Partners</p>
+      </article>
+    </div>
+
+    <div class="hero-slider-controls">
+      <button type="button" (click)="prevSlide()" aria-label="Previous slide">&#8592;</button>
+      <div class="hero-dots">
+        <button
+          type="button"
+          *ngFor="let item of heroSlides; index as i"
+          [class.is-active]="currentSlide === i"
+          (click)="goToSlide(i)"
+          [attr.aria-label]="'Go to slide ' + (i + 1)"
+        ></button>
+      </div>
+      <button type="button" (click)="nextSlide()" aria-label="Next slide">&#8594;</button>
+    </div>
+  </div>
+
+  <form class="hero-search" (ngSubmit)="onSearch()">
+    <h2>Search Vehicles</h2>
+    <p>Find budget, mid-range, and premium cars quickly.</p>
+
+    <label>
+      Keyword
+      <input
+        type="text"
+        name="keyword"
+        [(ngModel)]="searchKeyword"
+        placeholder="Brand, model, segment"
+      />
+    </label>
+
+    <label>
+      Category
+      <select name="vehicleType" [(ngModel)]="vehicleType">
+        <option value="new">New Cars</option>
+        <option value="used">Used Cars</option>
+      </select>
+    </label>
+
+    <label>
+      Budget
+      <select name="budget" [(ngModel)]="budget">
+        <option value="any">Any budget</option>
+        <option value="under10">Under 10L</option>
+        <option value="10to20">10L - 20L</option>
+        <option value="above20">Above 20L</option>
+      </select>
+    </label>
+
+    <button type="submit">Browse Listings</button>
+  </form>
+</section>
+
+<section class="market-strip section-block">
+  <div class="strip-track">
+    <span>Verified listings updated daily</span>
+    <span>Fast approvals for seller submissions</span>
+    <span>Popular searches: Compact SUV under 20L</span>
+    <span>Secure buyer-seller flow enabled</span>
+    <span>Verified listings updated daily</span>
+    <span>Fast approvals for seller submissions</span>
+    <span>Popular searches: Compact SUV under 20L</span>
+    <span>Secure buyer-seller flow enabled</span>
+  </div>
+</section>
+
+<section id="featured" class="collections section-block">
+  <article class="collection-card">
+    <header>
+      <h2>Featured New Cars</h2>
+      <a routerLink="/User/buy-new-car">View all</a>
+    </header>
+
+    <div class="listing-grid">
+      <article class="listing-item" *ngFor="let car of newShowcase">
+        <img [src]="car.image" [alt]="car.name" loading="lazy" />
+        <div class="listing-item__body">
+          <span>{{ car.tag }}</span>
+          <h3>{{ car.name }}</h3>
+          <small>{{ car.year }} • {{ car.location }}</small>
+          <p>{{ car.price }}</p>
+        </div>
+      </article>
+    </div>
+  </article>
+
+  <article class="collection-card">
+    <header>
+      <h2>Featured Used Cars</h2>
+      <a routerLink="/User/buy-second-hand">View all</a>
+    </header>
+
+    <div class="listing-grid">
+      <article class="listing-item" *ngFor="let car of usedShowcase">
+        <img [src]="car.image" [alt]="car.name" loading="lazy" />
+        <div class="listing-item__body">
+          <span>{{ car.tag }}</span>
+          <h3>{{ car.name }}</h3>
+          <small>{{ car.year }} • {{ car.location }}</small>
+          <p>{{ car.price }}</p>
+        </div>
+      </article>
+    </div>
+  </article>
+</section>
+
+<section id="how" class="journey section-block">
+  <header>
+    <p>How It Works</p>
+    <h2>Your buying and selling route in four clear steps.</h2>
+  </header>
+
+  <div class="journey-grid">
+    <article *ngFor="let item of workflowSteps">
+      <span>{{ item.step }}</span>
+      <div class="journey-icon">{{ item.icon }}</div>
+      <h3>{{ item.title }}</h3>
+      <p>{{ item.description }}</p>
+    </article>
+  </div>
+</section>
+
+<section id="why" class="concierge section-block">
+  <header>
+    <p>Why Choose Us</p>
+    <h2>Premium trust with inventory for every buyer segment.</h2>
+  </header>
+
+  <div class="concierge-grid">
+    <article *ngFor="let feature of whyChooseFeatures">
+      <h3>{{ feature.title }}</h3>
+      <p>{{ feature.description }}</p>
+    </article>
+  </div>
+</section>
+
+<section id="brands" class="brand-rail section-block">
+  <p>Featured Brands</p>
+  <div class="brand-list">
+    <span *ngFor="let brand of brandRail">{{ brand }}</span>
+  </div>
+</section>
+
+<section id="sell" class="sell-focus section-block">
+  <div class="sell-focus__content">
+    <p>Sell Your Car</p>
+    <h2>Turn your vehicle into a high-intent listing in minutes.</h2>
+    <ul>
+      <li>Quick listing form built for minimal effort</li>
+      <li>Buyer-focused visibility after admin verification</li>
+      <li>Professional presentation for better first impressions</li>
+    </ul>
+    <a class="btn-solid" routerLink="/User/sellcar">List Your Car Now</a>
+  </div>
+  <div class="sell-focus__media">
+    <img
+      src="https://images.pexels.com/photos/1719648/pexels-photo-1719648.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=1400"
+      alt="Seller listing experience"
+      loading="lazy"
+    />
+  </div>
+</section>
+
+<section id="testimonials" class="testimonials section-block">
+  <header>
+    <p>Voices of Users</p>
+    <h2>Why people choose DriveXchange.</h2>
+  </header>
+
+  <div class="testimonial-grid">
+    <article *ngFor="let item of testimonials">
+      <p>"{{ item.quote }}"</p>
+      <h3>{{ item.author }}</h3>
+      <span>{{ item.role }}</span>
+    </article>
+  </div>
+</section>
+
+<section class="final-cta section-block">
+  <div>
+    <h2>Ready to unlock the full premium marketplace?</h2>
+    <p>Create your account and continue with the complete buyer/seller experience.</p>
+  </div>
+  <div class="final-cta__actions">
+    <a class="btn-solid" routerLink="/User/register">Create Account</a>
+    <a class="btn-ghost" routerLink="/User/login">Login</a>
+  </div>
+</section>

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BuyNewCarService } from '../../service/buy-new-car-service';
 import { CommonModule } from '@angular/common';
-import { TestDriveService } from '../../service/test-drive-service';
 import { Router } from '@angular/router';
 
 
@@ -33,10 +32,10 @@ export class CarDetailsComponent implements OnInit {
   }
 
   goToTestDrive() {
-  this.router.navigate(['User/test-drive', this.car.id]);
+  this.router.navigate(['/User/test-drive', this.car.id]);
   }
  buyCar() {
-  this.router.navigate(['User/payment', this.car.id]);
+  this.router.navigate(['/User/payment', this.car.id]);
 }
 
 }

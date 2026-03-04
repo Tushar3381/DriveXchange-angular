@@ -1,122 +1,97 @@
-<div class="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-600 px-4">
-  <div class="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-md">
+<section class="reg-shell">
+  <div class="reg-card">
+    <header class="reg-header">
+      <p>Create DriveXchange Profile</p>
+      <h1>Start your car buying and selling journey.</h1>
+    </header>
 
-    <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">
-      Create Account
-    </h2>
-
-    <form (ngSubmit)="register()" class="space-y-4">
-
-      <!-- Name -->
-      <div>
-        <input type="text"
-          placeholder="Full Name"
-          class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500"
-          [(ngModel)]="name" name="name">
-        <small *ngIf="submitted && !name" class="text-red-500">Name is required</small>
-      </div>
-
-      <!-- Email -->
-      <div>
-        <input type="email"
-          placeholder="Email Address"
-          class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500"
-          [(ngModel)]="email" name="email">
-        <small *ngIf="submitted && !email" class="text-red-500">Email is required</small>
-      </div>
-
-      <!-- Contact -->
-      <div>
-        <input type="text"
-          placeholder="Contact Number"
-          class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500"
-          [(ngModel)]="contactnumber" name="contactnumber">
-        <small *ngIf="submitted && !contactnumber" class="text-red-500">
-          Contact number is required
-        </small>
-      </div>
-
-      <!-- Gender -->
-      <div>
-        <label class="block text-gray-700 font-medium mb-1">Gender</label>
-        <div class="flex gap-4">
-          <label><input type="radio" value="Male" [(ngModel)]="gender" name="gender"> Male</label>
-          <label><input type="radio" value="Female" [(ngModel)]="gender" name="gender"> Female</label>
-          <label><input type="radio" value="Other" [(ngModel)]="gender" name="gender"> Other</label>
+    <form (ngSubmit)="register()">
+      <div class="grid-two">
+        <div>
+          <label for="name">Full Name</label>
+          <input id="name" type="text" [(ngModel)]="name" name="name" placeholder="Your name" />
+          <small *ngIf="submitted && !name" class="field-error">Name is required.</small>
         </div>
-        <small *ngIf="submitted && !gender" class="text-red-500">Gender is required</small>
+
+        <div>
+          <label for="email">Email Address</label>
+          <input id="email" type="email" [(ngModel)]="email" name="email" placeholder="you@example.com" />
+          <small *ngIf="submitted && !email" class="field-error">Email is required.</small>
+        </div>
       </div>
 
-      <!-- Password -->
-     <div class="relative">
-  <input
-    [type]="showPassword ? 'text' : 'password'"
-    placeholder="Password"
-    class="w-full border rounded-lg px-4 py-2 pr-12 focus:ring-2 focus:ring-blue-500"
-    [(ngModel)]="password"
-    name="password">
+      <div class="grid-two">
+        <div>
+          <label for="contact">Contact Number</label>
+          <input
+            id="contact"
+            type="text"
+            [(ngModel)]="contactnumber"
+            name="contactnumber"
+            placeholder="10-digit mobile number"
+          />
+          <small *ngIf="submitted && !contactnumber" class="field-error">Contact number is required.</small>
+        </div>
 
-  <button
-    type="button"
-    (click)="showPassword = !showPassword"
-    class="absolute right-3 top-2.5 text-gray-500 hover:text-blue-600 text-lg">
-    {{ showPassword ? '🙈' : '👁' }}
-  </button>
-
-  <small *ngIf="submitted && !password" class="text-red-500">
-    Password is required
-  </small>
-</div>
-
-      <!-- Confirm Password -->
-<div class="relative">
-  <input
-    [type]="showConfirmPassword ? 'text' : 'password'"
-    placeholder="Confirm Password"
-    class="w-full border rounded-lg px-4 py-2 pr-12 focus:ring-2 focus:ring-blue-500"
-    [(ngModel)]="confirmPassword"
-    name="confirmPassword">
-
-  <button
-    type="button"
-    (click)="showConfirmPassword = !showConfirmPassword"
-    class="absolute right-3 top-2.5 text-gray-500 hover:text-blue-600 text-lg">
-    {{ showConfirmPassword ? '🙈' : '👁' }}
-  </button>
-
-  <small *ngIf="submitted && !confirmPassword" class="text-red-500">
-    Confirm password is required
-  </small>
-</div>
-
-
-      <!-- Error Message -->
-      <div *ngIf="errorMessage" class="text-red-600 text-center font-medium">
-        {{ errorMessage }}
+        <div>
+          <label for="gender">Gender</label>
+          <select id="gender" [(ngModel)]="gender" name="gender">
+            <option value="">Select</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+          <small *ngIf="submitted && !gender" class="field-error">Gender is required.</small>
+        </div>
       </div>
 
-      <!-- Success Message -->
-      <div *ngIf="message" class="text-green-600 text-center font-medium">
-        {{ message }}
+      <div class="grid-two">
+        <div>
+          <label for="password">Password</label>
+          <div class="password-wrap">
+            <input
+              id="password"
+              [type]="showPassword ? 'text' : 'password'"
+              [(ngModel)]="password"
+              name="password"
+              placeholder="At least 6 characters"
+            />
+            <button type="button" (click)="showPassword = !showPassword">
+              {{ showPassword ? 'Hide' : 'Show' }}
+            </button>
+          </div>
+          <small *ngIf="submitted && !password" class="field-error">Password is required.</small>
+        </div>
+
+        <div>
+          <label for="confirmPassword">Confirm Password</label>
+          <div class="password-wrap">
+            <input
+              id="confirmPassword"
+              [type]="showConfirmPassword ? 'text' : 'password'"
+              [(ngModel)]="confirmPassword"
+              name="confirmPassword"
+              placeholder="Repeat your password"
+            />
+            <button type="button" (click)="showConfirmPassword = !showConfirmPassword">
+              {{ showConfirmPassword ? 'Hide' : 'Show' }}
+            </button>
+          </div>
+          <small *ngIf="submitted && !confirmPassword" class="field-error">Confirmation is required.</small>
+        </div>
       </div>
 
-      <!-- Button -->
-      <button type="submit"
-        [disabled]="loading"
-        class="w-full bg-blue-600 text-white py-2 rounded-lg text-lg font-semibold 
-               hover:bg-blue-700 transition disabled:bg-gray-400">
+      <p class="error-msg" *ngIf="errorMessage">{{ errorMessage }}</p>
+      <p class="ok-msg" *ngIf="message">{{ message }}</p>
 
-        {{ loading ? 'Registering...' : 'Register' }}
+      <button class="submit-btn" type="submit" [disabled]="loading">
+        {{ loading ? 'Creating account...' : 'Create Account' }}
       </button>
-
     </form>
 
-    <p class="text-center mt-4 text-gray-600">
+    <p class="bottom-line">
       Already have an account?
-      <a routerLink="/User/login" class="text-blue-600 font-semibold hover:underline">
-        Login
-      </a>
+      <a routerLink="/User/login">Login</a>
     </p>
-
   </div>
-</div>
+</section>

@@ -15,6 +15,7 @@ export class UsedCarDetails implements OnInit {
 
   car: any;
   images: string[] = [];
+  activeImage = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -29,8 +30,21 @@ export class UsedCarDetails implements OnInit {
 
       if (data.images) {
         this.images = data.images.split(',');
+        this.activeImage = this.images[0] || '';
       }
     });
+  }
+
+  selectImage(img: string): void {
+    this.activeImage = img;
+  }
+
+  getActiveImage(): string {
+    if (!this.activeImage) {
+      return '/car1.jpg';
+    }
+
+    return this.getImageUrl(this.activeImage);
   }
 
   getImageUrl(img: string): string {

@@ -1,4 +1,180 @@
-.card:hover {
-  transform: scale(1.02);
-  transition: 0.3s;
+:host {
+  display: block;
+}
+
+.used-shell {
+  width: min(1180px, 92%);
+  margin: 2rem auto 2.5rem;
+}
+
+.used-hero {
+  border-radius: 20px;
+  padding: 1.6rem;
+  background:
+    linear-gradient(136deg, #0d3152, #173f68),
+    radial-gradient(circle at 90% 10%, rgba(244, 201, 93, 0.25), transparent 44%);
+  color: #edf4fc;
+}
+
+.used-hero p {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  font-size: 0.73rem;
+  color: #f4c95d;
+  font-weight: 800;
+}
+
+.used-hero h1 {
+  margin: 0.6rem 0 0;
+  font-size: clamp(1.3rem, 2vw, 1.95rem);
+  max-width: 28ch;
+}
+
+.used-filters {
+  margin-top: 1rem;
+  border-radius: 16px;
+  border: 1px solid #dae4ef;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 12px 28px rgba(10, 31, 53, 0.08);
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 0.32rem;
+  color: #3b5772;
+  font-size: 0.79rem;
+  font-weight: 700;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  height: 44px;
+  border-radius: 10px;
+  border: 1px solid #d2ddeb;
+  background: #fcfdff;
+  color: #173552;
+  padding: 0 0.8rem;
+}
+
+.result-count {
+  margin: 0.75rem 0 0;
+  color: #4f677f;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.used-grid {
+  margin-top: 0.8rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.95rem;
+}
+
+.used-card {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #dae3ef;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 14px 28px rgba(13, 35, 58, 0.08);
+  transition: transform 0.24s ease;
+}
+
+.used-card:hover {
+  transform: translateY(-4px);
+}
+
+.used-card__media {
+  height: 205px;
+  overflow: hidden;
+}
+
+.used-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.used-card__body {
+  padding: 1rem;
+}
+
+.used-card__body h3 {
+  margin: 0;
+  font-size: 1.03rem;
+  color: #122f4c;
+}
+
+.used-card__body p {
+  margin: 0.55rem 0 0;
+  color: #526880;
+  font-size: 0.88rem;
+}
+
+.dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  display: inline-block;
+  background: #8fa2b5;
+  margin: 0 0.42rem;
+  vertical-align: middle;
+}
+
+.price {
+  color: #1d6a4c !important;
+  font-size: 1.08rem !important;
+  font-weight: 800;
+}
+
+.used-card button {
+  margin-top: 0.75rem;
+  width: 100%;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  background: #133b63;
+  color: #eef5fc;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.empty-box {
+  margin-top: 1rem;
+  border-radius: 16px;
+  border: 1px dashed #c5d4e2;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.empty-box h2 {
+  margin: 0;
+  color: #163553;
+  font-size: 1.2rem;
+}
+
+.empty-box p {
+  margin: 0.45rem 0 0;
+  color: #5d738b;
+}
+
+@media (max-width: 980px) {
+  .used-filters {
+    grid-template-columns: 1fr;
+  }
+
+  .used-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .used-grid {
+    grid-template-columns: 1fr;
+  }
 }

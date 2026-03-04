@@ -1,48 +1,136 @@
-/* Image Styling */
-.image-container {
-  border-radius: 16px;
+:host {
+  display: block;
+}
+
+.detail-shell {
+  width: min(1120px, 92%);
+  margin: 2rem auto 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.detail-media {
+  border-radius: 20px;
   overflow: hidden;
+  border: 1px solid #d9e4ef;
+  box-shadow: 0 18px 35px rgba(11, 34, 57, 0.12);
+  background: #fff;
 }
 
-.main-image {
+.detail-media img {
   width: 100%;
-  height: 420px;
+  height: 100%;
+  min-height: 420px;
   object-fit: cover;
-  transition: transform 0.4s ease;
 }
 
-.image-container:hover .main-image {
-  transform: scale(1.05);
+.detail-content {
+  border-radius: 20px;
+  border: 1px solid #d9e4ef;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 16px 34px rgba(12, 35, 59, 0.1);
+  padding: 1.5rem;
 }
 
-/* Price Styling */
-.price-tag {
-  font-size: 28px;
-  font-weight: 700;
-  color: #198754;
+.eyebrow {
+  margin: 0;
+  color: #ca9d2c;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.72rem;
+  font-weight: 800;
 }
 
-/* Details Section */
-.car-details {
-  padding: 10px;
+.detail-content h1 {
+  margin: 0.55rem 0 0;
+  color: #123150;
+  font-size: clamp(1.4rem, 2vw, 2.1rem);
 }
 
-.specs p {
-  margin-bottom: 10px;
+.price {
+  margin: 0.55rem 0 0;
+  color: #1d6b4d;
+  font-size: 1.55rem;
+  font-weight: 800;
 }
 
-/* Button Hover Effect */
-.btn-success {
-  transition: all 0.3s ease;
+.meta-grid {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
 }
 
-.btn-success:hover {
-  transform: translateY(-3px);
+.meta-grid div {
+  border-radius: 12px;
+  border: 1px solid #d5e1ec;
+  padding: 0.75rem;
+  background: #fbfdff;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .main-image {
-    height: 300px;
+.meta-grid span {
+  display: block;
+  color: #5a7088;
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.meta-grid strong {
+  margin-top: 0.25rem;
+  display: block;
+  color: #163755;
+}
+
+.description {
+  margin-top: 1rem;
+}
+
+.description h2 {
+  margin: 0;
+  font-size: 1rem;
+  color: #173654;
+}
+
+.description p {
+  margin: 0.5rem 0 0;
+  color: #536a82;
+  line-height: 1.55;
+}
+
+.actions {
+  margin-top: 1.2rem;
+  display: flex;
+  gap: 0.7rem;
+}
+
+.actions button {
+  height: 44px;
+  border-radius: 10px;
+  border: none;
+  padding: 0 1rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.btn-outline {
+  background: #ffffff;
+  color: #173b60;
+  border: 1px solid #184368 !important;
+}
+
+.btn-fill {
+  background: linear-gradient(135deg, #133b63, #1d527f);
+  color: #eff5fd;
+}
+
+@media (max-width: 900px) {
+  .detail-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-media img {
+    min-height: 280px;
   }
 }

@@ -5,12 +5,13 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { LoginService } from '../../service/login-service';
+import { RouterLink } from '@angular/router';
 
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
@@ -60,6 +61,7 @@ export class Login {
       error: () => {
 
         this.loading = false;
+        this.errorMessage = 'Invalid email or password.';
         this.toast.show("Invalid credentials", "error");
 
       }

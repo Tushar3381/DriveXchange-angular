@@ -1,108 +1,75 @@
-<!-- User Dashboard Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
-  <a class="navbar-brand text-white" routerLink="/User/dashboard">
-    <strong>DriveXchange User</strong>
-  </a>
-
-  <ul class="navbar-nav ms-auto">
-
-    <li class="nav-item">
-      <a class="nav-link text-info" (click)="goToProfile()">
-        User Profile
-      </a>
-    </li>
-
-    <li class="nav-item">
-      <a class="nav-link text-warning" (click)="logout()">
-        Logout
-      </a>
-    </li>
-
-  </ul>
-</nav>
-
-
-<section class="bg-light py-5 border-bottom">
-  <div class="container text-center">
-
-    <h2 class="fw-bold">
-      Welcome back, <span class="text-primary">{{ loggedUserName }}</span> 👋
-    </h2>
-
-    <p class="text-muted mt-2">
-      Manage your car buying and selling activities easily.
+<section class="dash-hero">
+  <div class="dash-hero__content">
+    <p class="dash-eyebrow">Car Buying & Selling Platform</p>
+    <h1>Move from search to keys, all in one trusted place.</h1>
+    <p class="dash-subtitle">
+      Welcome back, <strong>{{ loggedUserName || 'Driver' }}</strong>. Manage discovery, comparison, and listing in a single dashboard.
     </p>
 
+    <div class="dash-hero__actions">
+      <a class="btn-primary" routerLink="/User/buy-new-car">Explore Cars</a>
+      <button class="btn-secondary" type="button" (click)="goToProfile()">My Profile</button>
+      <button class="btn-ghost" type="button" (click)="logout()">Logout</button>
+    </div>
+  </div>
+
+  <form class="dash-search" (submit)="$event.preventDefault()">
+    <h3>Quick Search</h3>
+    <label for="model">Make or model</label>
+    <input id="model" type="text" placeholder="e.g. Honda City, Hyundai Creta" />
+
+    <label for="budget">Budget range</label>
+    <select id="budget">
+      <option>Select budget</option>
+      <option>Under 8 Lakhs</option>
+      <option>8 - 15 Lakhs</option>
+      <option>15 - 30 Lakhs</option>
+      <option>30+ Lakhs</option>
+    </select>
+
+    <a class="search-btn" routerLink="/User/buy-second-hand">Search Inventory</a>
+  </form>
+</section>
+
+<section class="dash-stats">
+  <article class="dash-stat" *ngFor="let stat of trustStats">
+    <h3>{{ stat.value }}</h3>
+    <p>{{ stat.label }}</p>
+  </article>
+</section>
+
+<section class="dash-actions">
+  <header class="section-head">
+    <h2>Choose your next step</h2>
+    <p>Designed to help buyers and sellers complete decisions faster.</p>
+  </header>
+
+  <div class="action-grid">
+    <article class="action-card" *ngFor="let action of primaryActions">
+      <span class="action-icon">{{ action.icon }}</span>
+      <h3>{{ action.title }}</h3>
+      <p>{{ action.description }}</p>
+      <a [routerLink]="action.link">{{ action.cta }}</a>
+    </article>
   </div>
 </section>
 
-<!-- ================= DASHBOARD CARDS ================= -->
-<div class="container my-5">
+<section class="dash-value">
+  <header class="section-head">
+    <h2>Why DriveXchange works</h2>
+    <p>Professional UX built around trust, speed, and decision confidence.</p>
+  </header>
 
-  <div class="row g-4">
-
-    <!-- Buy New Car -->
-    <div class="col-lg-4 col-md-6">
-      <div class="card dashboard-card h-100 border-0 shadow-sm text-center p-4">
-
-        <div class="icon-box bg-primary text-white mb-3">
-          🚗
-        </div>
-
-        <h5 class="fw-semibold">Buy New Car</h5>
-        <p class="text-muted">
-          Explore brand-new cars added by admin.
-        </p>
-
-        <button class="btn btn-primary mt-auto"
-                routerLink="/User/buy-new-car">
-          Browse New Cars
-        </button>
-
-      </div>
-    </div>
-
-    <!-- Buy Second Hand Car -->
-    <div class="col-lg-4 col-md-6">
-      <div class="card dashboard-card h-100 border-0 shadow-sm text-center p-4">
-
-        <div class="icon-box bg-warning text-white mb-3">
-          🚘
-        </div>
-
-        <h5 class="fw-semibold">Buy Second-Hand Car</h5>
-        <p class="text-muted">
-          View admin-approved pre-owned cars.
-        </p>
-
-        <button class="btn btn-warning mt-auto"
-                routerLink="/User/buy-second-hand">
-          Browse Used Cars
-        </button>
-
-      </div>
-    </div>
-
-    <!-- Sell Car -->
-    <div class="col-lg-4 col-md-6">
-      <div class="card dashboard-card h-100 border-0 shadow-sm text-center p-4">
-
-        <div class="icon-box bg-success text-white mb-3">
-          💰
-        </div>
-
-        <h5 class="fw-semibold">Sell Your Car</h5>
-        <p class="text-muted">
-          List your car and connect with buyers quickly.
-        </p>
-
-        <button class="btn btn-success mt-auto"
-                routerLink="/User/sellcar">
-          Sell Car
-        </button>
-
-      </div>
-    </div>
-
+  <div class="value-grid">
+    <article class="value-card" *ngFor="let value of valueProps">
+      <h3>{{ value.title }}</h3>
+      <p>{{ value.description }}</p>
+    </article>
   </div>
-</div>
+</section>
+
+<section class="dash-cta">
+  <h2>Ready to list your vehicle?</h2>
+  <p>Publish your car details and start receiving buyer interest from verified users.</p>
+  <a routerLink="/User/sellcar">List My Car</a>
+</section>

@@ -1,70 +1,33 @@
-<div class="container mt-4" *ngIf="car">
-
-  <h2 class="text-center mb-4">
-    {{ car.brand }} {{ car.model }}
-  </h2>
-
-  <!-- IMAGE GALLERY -->
-  <div class="row mb-4">
-    <div class="col-md-4 mb-3" *ngFor="let img of images">
-      <img
-        [src]="getImageUrl(img)"
-        class="img-fluid rounded shadow"
-        style="height:200px; width:100%; object-fit:cover;"
-      />
+<section class="used-detail-shell" *ngIf="car">
+  <article class="gallery-card">
+    <div class="main-image">
+      <img [src]="getActiveImage()" alt="Used car image" />
     </div>
-  </div>
 
-  <!-- CAR DETAILS -->
-  <div class="card shadow p-3">
-    <h4>Car Information</h4>
+    <div class="thumb-grid">
+      <button type="button" *ngFor="let img of images" (click)="selectImage(img)">
+        <img [src]="getImageUrl(img)" alt="Thumbnail" />
+      </button>
+    </div>
+  </article>
 
-    <table class="table table-bordered mt-3">
-      <tr>
-        <th>Brand</th>
-        <td>{{ car.brand }}</td>
-      </tr>
+  <article class="info-card">
+    <p class="eyebrow">Used Car Details</p>
+    <h1>{{ car.brand }} {{ car.model }}</h1>
+    <p class="price">₹{{ car.price | number }}</p>
 
-      <tr>
-        <th>Model</th>
-        <td>{{ car.model }}</td>
-      </tr>
+    <div class="info-grid">
+      <div><span>Year</span><strong>{{ car.year }}</strong></div>
+      <div><span>Fuel Type</span><strong>{{ car.fuelType }}</strong></div>
+      <div><span>Owner</span><strong>{{ car.ownerName }}</strong></div>
+      <div><span>Contact</span><strong>{{ car.contactNumber }}</strong></div>
+    </div>
 
-      <tr>
-        <th>Year</th>
-        <td>{{ car.year }}</td>
-      </tr>
+    <section class="description">
+      <h2>Description</h2>
+      <p>{{ car.description || 'No description available.' }}</p>
+    </section>
 
-      <tr>
-        <th>Fuel Type</th>
-        <td>{{ car.fuelType }}</td>
-      </tr>
-
-      <tr>
-        <th>Price</th>
-        <td>₹{{ car.price }}</td>
-      </tr>
-
-      <tr>
-        <th>Description</th>
-        <td>{{ car.description }}</td>
-      </tr>
-
-      <tr>
-        <th>Owner Name</th>
-        <td>{{ car.ownerName }}</td>
-      </tr>
-
-      <tr>
-        <th>Contact Number</th>
-        <td>{{ car.contactNumber }}</td>
-      </tr>
-    </table>
-
-    <button class="btn btn-success w-100">
-      Contact Seller
-    </button>
-
-  </div>
-
-</div>
+    <a class="contact-btn" [href]="'tel:' + car.contactNumber">Contact Seller</a>
+  </article>
+</section>

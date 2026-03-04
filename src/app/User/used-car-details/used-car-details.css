@@ -1,4 +1,160 @@
-img:hover {
-  transform: scale(1.02);
-  transition: 0.3s;
+:host {
+  display: block;
+}
+
+.used-detail-shell {
+  width: min(1120px, 92%);
+  margin: 2rem auto 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.gallery-card,
+.info-card {
+  border-radius: 20px;
+  border: 1px solid #dae4ef;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 16px 34px rgba(11, 33, 56, 0.1);
+}
+
+.gallery-card {
+  padding: 1rem;
+}
+
+.main-image {
+  overflow: hidden;
+  border-radius: 14px;
+}
+
+.main-image img {
+  width: 100%;
+  height: 390px;
+  object-fit: cover;
+}
+
+.thumb-grid {
+  margin-top: 0.7rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.thumb-grid button {
+  padding: 0;
+  border-radius: 10px;
+  border: 1px solid #d7e2ee;
+  overflow: hidden;
+  background: #fff;
+  cursor: pointer;
+}
+
+.thumb-grid img {
+  width: 100%;
+  height: 72px;
+  object-fit: cover;
+}
+
+.info-card {
+  padding: 1.4rem;
+}
+
+.eyebrow {
+  margin: 0;
+  color: #cc9f2d;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.info-card h1 {
+  margin: 0.55rem 0 0;
+  color: #123250;
+  font-size: clamp(1.35rem, 1.9vw, 2rem);
+}
+
+.price {
+  margin: 0.5rem 0 0;
+  color: #1c6b4d;
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.info-grid {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+}
+
+.info-grid div {
+  border: 1px solid #d4dfeb;
+  border-radius: 12px;
+  padding: 0.7rem;
+  background: #fbfdff;
+}
+
+.info-grid span {
+  display: block;
+  color: #5a7088;
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.info-grid strong {
+  margin-top: 0.25rem;
+  display: block;
+  color: #173654;
+}
+
+.description {
+  margin-top: 1rem;
+}
+
+.description h2 {
+  margin: 0;
+  font-size: 1rem;
+  color: #173654;
+}
+
+.description p {
+  margin: 0.48rem 0 0;
+  color: #556c83;
+  line-height: 1.55;
+}
+
+.contact-btn {
+  margin-top: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 44px;
+  border-radius: 10px;
+  text-decoration: none;
+  background: linear-gradient(135deg, #143c65, #1f5482);
+  color: #edf5fd;
+  font-weight: 800;
+}
+
+@media (max-width: 900px) {
+  .used-detail-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .main-image img {
+    height: 280px;
+  }
+}
+
+@media (max-width: 600px) {
+  .thumb-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
 }
