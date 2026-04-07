@@ -7,15 +7,12 @@ databases:
 services:
   - type: web
     name: drivexchange-api
+    plan: free
     runtime: java
     rootDir: backend
     buildCommand: ./mvnw -DskipTests package
     startCommand: java -jar target/DriveXchangeAdmin-0.0.1-SNAPSHOT.jar
     healthCheckPath: /users/disp
-    disk:
-      name: drivexchange-data
-      mountPath: /var/data
-      sizeGB: 1
     envVars:
       - key: SPRING_DATASOURCE_URL
         fromDatabase:
@@ -39,24 +36,12 @@ services:
         sync: false
       - key: APP_MAIL_FROM_NAME
         value: DriveXchange Support
-      - key: SPRING_MAIL_HOST
-        value: smtp.gmail.com
-      - key: SPRING_MAIL_PORT
-        value: 587
-      - key: SPRING_MAIL_USERNAME
-        sync: false
-      - key: SPRING_MAIL_PASSWORD
-        sync: false
-      - key: SPRING_MAIL_SMTP_AUTH
-        value: true
-      - key: SPRING_MAIL_SMTP_STARTTLS
-        value: true
       - key: APP_RESET_DEBUG_EXPOSE_LINK
         value: false
       - key: APP_UPLOADS_DIR
-        value: /var/data/uploads
+        value: /tmp/uploads
       - key: APP_CAR_UPLOADS_DIR
-        value: /var/data/car-uploads
+        value: /tmp/car-uploads
 
   - type: static
     name: drivexchange-web
