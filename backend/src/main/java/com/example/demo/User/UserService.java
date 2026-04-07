@@ -13,8 +13,4 @@ public interface UserService {
     ResponseEntity<?> changePassword(Long id, String oldPassword, String newPassword);
 
     ResponseEntity<?> register(RegisterRequest request);
-
-    ResponseEntity<?> forgotPassword(ForgotPasswordRequest request);
-
-    ResponseEntity<?> resetPassword(ResetPasswordRequest request);
 }

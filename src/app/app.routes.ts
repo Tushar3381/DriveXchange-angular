@@ -61,11 +61,6 @@ export const routes: Routes = [
     path: 'User/payment/:id',
     loadComponent: () => import('./User/payment/payment').then((m) => m.PaymentComponent)
   },
-  {
-    path: 'User/forgotpassword',
-    loadComponent: () => import('./User/forgotpassword/forgotpassword').then((m) => m.ForgotPassword)
-  },
-
   // -------------------------
   // ADMIN ROUTES
   // -------------------------

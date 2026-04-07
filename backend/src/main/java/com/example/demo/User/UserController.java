@@ -54,13 +54,4 @@ public class UserController {
         return userservice.changePassword(id, oldPassword, newPassword);
     }
 
-    @PostMapping("/forgot-password")
-    public ResponseEntity<?> forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
-        return userservice.forgotPassword(request);
-    }
-
-    @PostMapping("/reset-password")
-    public ResponseEntity<?> resetPassword(@Valid @RequestBody ResetPasswordRequest request) {
-        return userservice.resetPassword(request);
-    }
 }
