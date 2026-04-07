@@ -163,6 +163,8 @@ tbody tr:last-child td {
 .description {
   max-width: 34ch;
   color: var(--dx-muted);
+  white-space: pre-line;
+  line-height: 1.55;
 }
 
 .action-group {

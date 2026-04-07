@@ -17,15 +17,32 @@
     <p class="price">₹{{ car.price | number }}</p>
 
     <div class="info-grid">
+      <div><span>Brand</span><strong>{{ car.brand }}</strong></div>
+      <div><span>Model</span><strong>{{ car.model }}</strong></div>
       <div><span>Year</span><strong>{{ car.year }}</strong></div>
       <div><span>Fuel Type</span><strong>{{ car.fuelType }}</strong></div>
       <div><span>Owner</span><strong>{{ car.ownerName }}</strong></div>
       <div><span>Contact</span><strong>{{ car.contactNumber }}</strong></div>
     </div>
 
+    <section class="detail-grid" *ngIf="descriptionDetailItems.length">
+      <h2>Key Details</h2>
+      <div class="detail-grid__items">
+        <div class="detail-chip" *ngFor="let item of descriptionDetailItems">
+          <span>{{ item.label }}</span>
+          <strong>{{ item.value }}</strong>
+        </div>
+      </div>
+    </section>
+
     <section class="description">
       <h2>Description</h2>
-      <p>{{ car.description || 'No description available.' }}</p>
+      <ng-container *ngIf="descriptionParagraphs.length; else usedCarDescriptionFallback">
+        <p *ngFor="let paragraph of descriptionParagraphs">{{ paragraph }}</p>
+      </ng-container>
+      <ng-template #usedCarDescriptionFallback>
+        <p>{{ descriptionDetailItems.length ? 'The main specifications are shown above.' : 'No description available.' }}</p>
+      </ng-template>
     </section>
 
     <a class="contact-btn" [href]="'tel:' + car.contactNumber">Contact Seller</a>

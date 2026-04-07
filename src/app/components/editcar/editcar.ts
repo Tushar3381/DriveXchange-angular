@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MEDIA_ENDPOINTS } from '../../core/api.config';
 import Swal from 'sweetalert2';
+import { normalizeCarDescription } from '../../utils/car-description';
 
 @Component({
   selector: 'app-edit-car',
@@ -27,6 +28,8 @@ export class EditCarComponent implements OnInit {
   selectedImage?: File; // hold new image if chosen
   selectedImageName = '';
   readonly carImagesBase = MEDIA_ENDPOINTS.carImages;
+  readonly descriptionPlaceholder =
+    'Example:\nEngine: 1.5L Petrol\nMileage: 18 km/l\nSafety: 6 airbags\nComfort: Sunroof and rear AC vents';
 
   constructor(
     private route: ActivatedRoute,
@@ -53,6 +56,11 @@ export class EditCarComponent implements OnInit {
 
 
   onSubmit(): void {
+    this.car = {
+      ...this.car,
+      description: normalizeCarDescription(this.car.description)
+    };
+
     this.carService.updateCar(this.car.id, this.car, this.selectedImage).subscribe({
       next: () => {
         Swal.fire({

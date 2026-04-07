@@ -51,7 +51,9 @@
             </td>
             <td>{{ car.color }}</td>
             <td>{{ car.price | currency: 'INR':'symbol':'1.0-0' }}</td>
-            <td class="description">{{ car.description || 'No description added yet.' }}</td>
+            <td class="description" [title]="car.description || 'No description added yet.'">
+              {{ getCarDescriptionPreview(car.description) }}
+            </td>
             <td>
               <div class="action-group">
                 <button type="button" class="btn-edit" (click)="editCar(car.id)">Edit</button>

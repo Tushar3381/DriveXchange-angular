@@ -40,7 +40,13 @@
 
         <label class="field field--full">
           <span>Description</span>
-          <textarea [(ngModel)]="car.description" name="description" rows="4"></textarea>
+          <textarea
+            [(ngModel)]="car.description"
+            name="description"
+            rows="5"
+            [placeholder]="descriptionPlaceholder"
+          ></textarea>
+          <small>Keep each feature on a separate line for a cleaner customer-facing details view.</small>
         </label>
 
         <label class="field field--full">

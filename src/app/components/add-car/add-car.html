@@ -37,7 +37,14 @@
 
         <label class="field field--full">
           <span>Description</span>
-          <textarea id="description" name="description" rows="4" [(ngModel)]="car.description"></textarea>
+          <textarea
+            id="description"
+            name="description"
+            rows="5"
+            [(ngModel)]="car.description"
+            [placeholder]="descriptionPlaceholder"
+          ></textarea>
+          <small>Use one point per line so the car details page shows the information neatly.</small>
         </label>
 
         <label class="field field--full">

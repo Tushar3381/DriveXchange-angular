@@ -5,6 +5,7 @@ import { Car } from '../../Models/car'; // your Car model
 import { Router } from '@angular/router';
 import { MEDIA_ENDPOINTS } from '../../core/api.config';
 import Swal from 'sweetalert2';
+import { getDescriptionPreview } from '../../utils/car-description';
 
 @Component({
   selector: 'app-car-list',
@@ -77,5 +78,9 @@ export class CarListComponent implements OnInit {
 
   getImageUrl(car: Car) {
     return car.imageUrl ? `${this.carImagesBase}/${car.imageUrl}` : '';
+  }
+
+  getCarDescriptionPreview(description: string) {
+    return getDescriptionPreview(description);
   }
 }

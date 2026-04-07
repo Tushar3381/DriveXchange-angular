@@ -10,6 +10,14 @@
 
     <div class="meta-grid">
       <div>
+        <span>Brand</span>
+        <strong>{{ car.brand || 'Not specified' }}</strong>
+      </div>
+      <div>
+        <span>Model</span>
+        <strong>{{ car.model || 'Not specified' }}</strong>
+      </div>
+      <div>
         <span>Color</span>
         <strong>{{ car.color || 'Not specified' }}</strong>
       </div>
@@ -19,9 +27,24 @@
       </div>
     </div>
 
+    <section class="detail-grid" *ngIf="descriptionDetailItems.length">
+      <h2>Key Details</h2>
+      <div class="detail-grid__items">
+        <div class="detail-chip" *ngFor="let item of descriptionDetailItems">
+          <span>{{ item.label }}</span>
+          <strong>{{ item.value }}</strong>
+        </div>
+      </div>
+    </section>
+
     <section class="description">
       <h2>Overview</h2>
-      <p>{{ car.description || 'No description available.' }}</p>
+      <ng-container *ngIf="descriptionParagraphs.length; else newCarDescriptionFallback">
+        <p *ngFor="let paragraph of descriptionParagraphs">{{ paragraph }}</p>
+      </ng-container>
+      <ng-template #newCarDescriptionFallback>
+        <p>{{ descriptionDetailItems.length ? 'The main specifications are shown above.' : 'No description available.' }}</p>
+      </ng-template>
     </section>
 
     <div class="actions">

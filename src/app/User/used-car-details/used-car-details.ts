@@ -4,6 +4,11 @@ import { SellCarService } from '../../service/sell-car.Service';
 import { CommonModule } from '@angular/common';
 import { OnInit } from '@angular/core';
 import { MEDIA_ENDPOINTS } from '../../core/api.config';
+import {
+  DescriptionDetailItem,
+  getDescriptionDetailItems,
+  getDescriptionNarrativeParagraphs
+} from '../../utils/car-description';
 
 @Component({
   selector: 'app-used-car-details',
@@ -17,6 +22,8 @@ export class UsedCarDetails implements OnInit {
   car: any;
   images: string[] = [];
   activeImage = '';
+  descriptionDetailItems: DescriptionDetailItem[] = [];
+  descriptionParagraphs: string[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -28,6 +35,8 @@ export class UsedCarDetails implements OnInit {
 
     this.service.getCarById(id).subscribe(data => {
       this.car = data;
+      this.descriptionDetailItems = getDescriptionDetailItems(data?.description);
+      this.descriptionParagraphs = getDescriptionNarrativeParagraphs(data?.description);
 
       if (data.images) {
         this.images = data.images.split(',');

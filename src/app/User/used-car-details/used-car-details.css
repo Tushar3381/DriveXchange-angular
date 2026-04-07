@@ -113,16 +113,51 @@
   margin-top: 1rem;
 }
 
+.detail-grid {
+  margin-top: 1rem;
+}
+
+.detail-grid h2,
 .description h2 {
   margin: 0;
   font-size: 1rem;
   color: #1b2f43;
 }
 
+.detail-grid__items {
+  margin-top: 0.65rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.detail-chip {
+  border: 1px solid var(--dx-border);
+  border-radius: 12px;
+  padding: 0.75rem;
+  background: #ffffff;
+}
+
+.detail-chip span {
+  display: block;
+  color: #5f6f7f;
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.detail-chip strong {
+  display: block;
+  margin-top: 0.3rem;
+  color: #1b2f43;
+  line-height: 1.45;
+}
+
 .description p {
   margin: 0.48rem 0 0;
   color: #5f6f7f;
   line-height: 1.55;
+  white-space: pre-line;
 }
 
 .contact-btn {
@@ -154,7 +189,8 @@
     grid-template-columns: repeat(3, 1fr);
   }
 
-  .info-grid {
+  .info-grid,
+  .detail-grid__items {
     grid-template-columns: 1fr;
   }
 }

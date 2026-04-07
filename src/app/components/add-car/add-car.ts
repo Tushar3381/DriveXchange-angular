@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CarService } from '../../service/car.service';
 import { Car } from '../../Models/car';
 import { FormsModule } from '@angular/forms';
+import { normalizeCarDescription } from '../../utils/car-description';
 
 @Component({
   selector: 'app-add-car',
@@ -17,6 +18,8 @@ export class AddCarComponent {
   selectedFileName = '';
   successMsg: string = '';
   messageType: 'success' | 'error' = 'success';
+  readonly descriptionPlaceholder =
+    'Example:\nEngine: 1.5L Petrol\nMileage: 18 km/l\nSafety: 6 airbags\nComfort: Sunroof and rear AC vents';
 
   constructor(private carService: CarService) {}
 
@@ -26,6 +29,12 @@ export class AddCarComponent {
   }
 
   onSubmit() {
+    const formattedDescription = normalizeCarDescription(this.car.description);
+    this.car = {
+      ...this.car,
+      description: formattedDescription
+    };
+
     if (this.selectedFile) {
       const formData = new FormData();
       formData.append('id', this.car.id.toString());
@@ -33,7 +42,7 @@ export class AddCarComponent {
       formData.append('model', this.car.model);
       formData.append('color', this.car.color);
       formData.append('price', this.car.price.toString());
-      formData.append('description', this.car.description || '');
+      formData.append('description', formattedDescription);
       formData.append('image', this.selectedFile);
 
       this.carService.addCarWithImage(formData).subscribe({
