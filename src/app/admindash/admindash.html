@@ -1,46 +1,71 @@
-<!-- admin-dashboard.component.html -->
+<div class="admin-shell">
+  <div class="admin-backdrop" *ngIf="mobileNavOpen" (click)="closeMobileNav()"></div>
 
-<div class="layout">
+  <aside class="admin-sidebar" [class.is-open]="mobileNavOpen">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand__mark">DX</div>
+      <div>
+        <p class="sidebar-brand__eyebrow">DriveXchange</p>
+        <h2>Admin Hub</h2>
+        <span>Simple tools for daily operations</span>
+      </div>
+    </div>
 
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <h2 class="logo">🚗 AutoAdmin</h2>
-    
-    <ul class="nav-links">
-      <li><a routerLink="/dash" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        <span>📊</span> Dashboard
-      </a></li>
+    <nav class="sidebar-nav" aria-label="Admin navigation">
+      <a
+        *ngFor="let item of navItems"
+        class="sidebar-nav__link"
+        [routerLink]="item.route"
+        routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{ exact: item.exact }"
+      >
+        <span class="sidebar-nav__marker"></span>
+        <span class="sidebar-nav__content">
+          <strong>{{ item.label }}</strong>
+          <small>{{ item.description }}</small>
+        </span>
+      </a>
+    </nav>
 
-      <li><a routerLink="/dash/carslist" routerLinkActive="active">
-        <span>🚘</span> Car List
-      </a></li>
-
-      <li><a routerLink="/dash/add-car" routerLinkActive="active">
-        <span>➕</span> Add Car
-      </a></li>
-
-      <li><a routerLink="/dash/adminapprove-car" routerLinkActive="active">
-        <span>⚙️</span> Manage Cars
-      </a></li>
-
-<li>
-  <a routerLink="/dash/testdrive-requests" routerLinkActive="active">
-    <span>📅</span> Test Drive Requests
-  </a>
-</li>
-    </ul>
+    <div class="sidebar-note">
+      <p>Keep actions focused.</p>
+      <span>Approvals, listings, and follow-ups all stay one click away.</span>
+    </div>
   </aside>
 
-  <!-- Content Area -->
-  <div class="main-content">
-    
-    <header class="topbar">
-      <h2>Welcome Admin</h2>
-     
-      <button class="logout-btn" (click)="logout()">Logout</button>
+  <div class="admin-main">
+    <header class="admin-topbar">
+      <div class="admin-topbar__intro">
+        <button
+          type="button"
+          class="menu-toggle"
+          (click)="toggleMobileNav()"
+          [attr.aria-expanded]="mobileNavOpen"
+          aria-label="Toggle admin navigation"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <div>
+          <p class="admin-topbar__eyebrow">Admin workspace</p>
+          <h1>{{ currentPageTitle }}</h1>
+          <p class="admin-topbar__description">{{ currentPageDescription }}</p>
+        </div>
+      </div>
+
+      <div class="admin-topbar__actions">
+        <div class="admin-status-card">
+          <span>Workspace status</span>
+          <strong>Ready for review</strong>
+        </div>
+
+        <button class="logout-btn" (click)="logout()">Logout</button>
+      </div>
     </header>
 
-    <section class="content-area">
+    <section class="admin-content">
       <router-outlet></router-outlet>
     </section>
   </div>

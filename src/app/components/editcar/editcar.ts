@@ -4,6 +4,8 @@ import { CarService } from '../../service/car.service';
 import { Car } from '../../Models/car';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MEDIA_ENDPOINTS } from '../../core/api.config';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit-car',
@@ -13,17 +15,18 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./editcar.css']
 })
 export class EditCarComponent implements OnInit {
-car: Car = {
-  id: 0,
-  brand: '',
-  model: '',
-  color: '',
-  price: 0,
-  description: '',
-  imageUrl: ''   // still safe here
-};
+  car: Car = {
+    id: 0,
+    brand: '',
+    model: '',
+    color: '',
+    price: 0,
+    description: '',
+    imageUrl: ''
+  };
   selectedImage?: File; // hold new image if chosen
-
+  selectedImageName = '';
+  readonly carImagesBase = MEDIA_ENDPOINTS.carImages;
 
   constructor(
     private route: ActivatedRoute,
@@ -43,20 +46,35 @@ car: Car = {
     });
   }
 
-   onFileSelected(event: any): void {
+  onFileSelected(event: any): void {
     this.selectedImage = event.target.files[0];
+    this.selectedImageName = this.selectedImage ? this.selectedImage.name : '';
   }
 
 
-onSubmit(): void {
+  onSubmit(): void {
     this.carService.updateCar(this.car.id, this.car, this.selectedImage).subscribe({
       next: () => {
-        alert('Car updated successfully!');
+        Swal.fire({
+          icon: 'success',
+          title: 'Car updated successfully',
+          timer: 1600,
+          showConfirmButton: false
+        });
         this.router.navigate(['/dash/carslist']); // back to list
       },
       error: (err) => {
         console.error('Error updating car:', err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Unable to update car',
+          text: 'Please review the details and try again.'
+        });
       }
     });
+  }
+
+  get previewImageUrl() {
+    return this.car.imageUrl ? `${this.carImagesBase}/${this.car.imageUrl}` : '';
   }
 }

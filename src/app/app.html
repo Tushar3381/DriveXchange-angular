@@ -9,17 +9,32 @@
         </span>
       </a>
 
-      <nav class="dx-nav">
-        <a routerLink="/" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="is-active">Home</a>
-        <a routerLink="/User/buy-new-car" routerLinkActive="is-active">New Cars</a>
-        <a routerLink="/User/buy-second-hand" routerLinkActive="is-active">Used Cars</a>
-        <a routerLink="/User/sellcar" routerLinkActive="is-active">Sell Car</a>
-        <a routerLink="/User/dashboard" routerLinkActive="is-active">Dashboard</a>
-      </nav>
+      <button
+        type="button"
+        class="dx-menu-toggle"
+        (click)="toggleMobileMenu()"
+        [attr.aria-expanded]="mobileMenuOpen"
+        aria-controls="main-menu"
+        aria-label="Toggle navigation menu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
 
-      <div class="dx-auth-links">
-        <a class="dx-link" routerLink="/User/login">Login</a>
-        <a class="dx-btn" routerLink="/User/register">Create Account</a>
+      <div id="main-menu" class="dx-header__menus" [class.is-open]="mobileMenuOpen">
+        <nav class="dx-nav">
+          <a routerLink="/" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="is-active" (click)="closeMobileMenu()">Home</a>
+          <a routerLink="/User/buy-new-car" routerLinkActive="is-active" (click)="closeMobileMenu()">New Cars</a>
+          <a routerLink="/User/buy-second-hand" routerLinkActive="is-active" (click)="closeMobileMenu()">Used Cars</a>
+          <a routerLink="/User/sellcar" routerLinkActive="is-active" (click)="closeMobileMenu()">Sell Car</a>
+          <a routerLink="/User/dashboard" routerLinkActive="is-active" (click)="closeMobileMenu()">Dashboard</a>
+        </nav>
+
+        <div class="dx-auth-links">
+          <a class="dx-link" routerLink="/User/login" [queryParams]="{ returnUrl: authReturnUrl }" (click)="closeMobileMenu()">Login</a>
+          <a class="dx-btn" routerLink="/User/register" [queryParams]="{ returnUrl: authReturnUrl }" (click)="closeMobileMenu()">Create Account</a>
+        </div>
       </div>
     </div>
   </header>

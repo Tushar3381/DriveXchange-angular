@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { API_ENDPOINTS } from '../core/api.config';
 
 
 @Injectable({
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class TestDriveService  {
 
-  private baseUrl = 'http://localhost:8080/testdrive';
+  private baseUrl = API_ENDPOINTS.testDrive;
 
   constructor(private http: HttpClient) {}
 

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { SellCarService } from '../../service/sell-car.Service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { MEDIA_ENDPOINTS } from '../../core/api.config';
 
 @Component({
   selector: 'app-buy-second-hand-car',
@@ -67,6 +68,6 @@ export class BuySecondHandCar implements OnInit {
     if (!images) return '/car1.jpg';
 
     let imageArray = images.split(',');
-    return 'http://localhost:8080/car-uploads/' + imageArray[0];
+    return `${MEDIA_ENDPOINTS.carUploads}/${imageArray[0]}`;
   }
 }

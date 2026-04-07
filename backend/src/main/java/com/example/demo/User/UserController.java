@@ -1,14 +1,20 @@
 package com.example.demo.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
     @Autowired
@@ -18,41 +24,43 @@ public class UserController {
     public String get() {
         return "This is User API";
     }
-    
-//Registration User
+
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request) {
         return userservice.register(request);
     }
 
-    
-//Login User
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User u1) {
         return userservice.login(u1.getEmail(), u1.getPassword());
     }
-    
-// GET USER PROFILE BY ID
+
     @GetMapping("/profile/{id}")
     public ResponseEntity<User> getProfile(@PathVariable Long id) {
         return userservice.getProfile(id);
     }
 
-// UPDATE USER PROFILE
     @PutMapping("/profile/update")
     public ResponseEntity<User> updateProfile(@RequestBody User user) {
         return userservice.updateProfile(user);
     }
 
-// USER CAN CHANGE PASSWORD
     @PostMapping("/change-password")
-    public ResponseEntity<?> changePassword(@RequestParam Long id,
-                                            @RequestParam String oldPassword,
-                                            @RequestParam String newPassword) {
+    public ResponseEntity<?> changePassword(
+            @RequestParam Long id,
+            @RequestParam String oldPassword,
+            @RequestParam String newPassword) {
 
         return userservice.changePassword(id, oldPassword, newPassword);
-    } 
-    
-   
+    }
 
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
+        return userservice.forgotPassword(request);
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@Valid @RequestBody ResetPasswordRequest request) {
+        return userservice.resetPassword(request);
+    }
 }

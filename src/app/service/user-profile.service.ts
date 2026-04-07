@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { API_ENDPOINTS } from '../core/api.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserProfileService {
 
-  private baseUrl = 'http://localhost:8080/users';
+  private baseUrl = API_ENDPOINTS.users;
 
   constructor(private http: HttpClient) { }
 // GET USER PROFILE
@@ -19,9 +20,9 @@ export class UserProfileService {
     return this.http.put(`${this.baseUrl}/profile/update`, user);
   }
 // USER CHANGE THE PASSWORD
-changePassword(data: any) {
-  return this.http.post('http://localhost:8080/users/change-password', null, {
-    params: data
-  });  
-}
+  changePassword(data: any) {
+    return this.http.post(`${API_ENDPOINTS.users}/change-password`, null, {
+      params: data
+    });  
+  }
 }

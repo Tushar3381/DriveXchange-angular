@@ -1,0 +1,71 @@
+databases:
+  - name: drivexchange-db
+    databaseName: adminpannel
+    user: drivexchange
+    plan: free
+
+services:
+  - type: web
+    name: drivexchange-api
+    runtime: java
+    rootDir: backend
+    buildCommand: ./mvnw -DskipTests package
+    startCommand: java -jar target/DriveXchangeAdmin-0.0.1-SNAPSHOT.jar
+    healthCheckPath: /users/disp
+    disk:
+      name: drivexchange-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        fromDatabase:
+          name: drivexchange-db
+          property: connectionString
+      - key: SPRING_DATASOURCE_USERNAME
+        fromDatabase:
+          name: drivexchange-db
+          property: user
+      - key: SPRING_DATASOURCE_PASSWORD
+        fromDatabase:
+          name: drivexchange-db
+          property: password
+      - key: APP_JWT_SECRET
+        generateValue: true
+      - key: APP_ADMIN_SETUP_KEY
+        sync: false
+      - key: APP_FRONTEND_BASE_URL
+        sync: false
+      - key: APP_CORS_ALLOWED_ORIGINS
+        sync: false
+      - key: APP_MAIL_FROM_NAME
+        value: DriveXchange Support
+      - key: SPRING_MAIL_HOST
+        value: smtp.gmail.com
+      - key: SPRING_MAIL_PORT
+        value: 587
+      - key: SPRING_MAIL_USERNAME
+        sync: false
+      - key: SPRING_MAIL_PASSWORD
+        sync: false
+      - key: SPRING_MAIL_SMTP_AUTH
+        value: true
+      - key: SPRING_MAIL_SMTP_STARTTLS
+        value: true
+      - key: APP_RESET_DEBUG_EXPOSE_LINK
+        value: false
+      - key: APP_UPLOADS_DIR
+        value: /var/data/uploads
+      - key: APP_CAR_UPLOADS_DIR
+        value: /var/data/car-uploads
+
+  - type: static
+    name: drivexchange-web
+    buildCommand: npm ci && npm run build:render
+    staticPublishPath: dist/DriveXchange/browser
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: API_BASE_URL
+        sync: false

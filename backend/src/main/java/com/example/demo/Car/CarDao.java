@@ -1,22 +1,28 @@
 package com.example.demo.Car;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.util.List;
-import java.nio.file.*;
-
-
-
 @Service
 public class CarDao implements CarService {
 
 	@Autowired
 	CarRepo cr;
+
+    @Value("${app.uploads-dir:uploads}")
+    private String uploadsDir;
 	
 	// Save Car 
 	@Override
@@ -61,6 +67,7 @@ public class CarDao implements CarService {
         existingCar.setModel(c1.getModel());
         existingCar.setColor(c1.getColor());
         existingCar.setPrice(c1.getPrice());
+        existingCar.setDescription(c1.getDescription());
         existingCar.setImageUrl(c1.getImageUrl());
 
         Car updatedCar = cr.save(existingCar);
@@ -87,28 +94,24 @@ public class CarDao implements CarService {
     
     @Override
     public ResponseEntity<Car> saveCarWithImage(Long id,String brand, String model, String color, double price,String description, MultipartFile image) {
-        //save image to "uploads" folder
         String fileName = System.currentTimeMillis() + "_" + image.getOriginalFilename();
-        Path uploadPath = Paths.get("uploads");
+        Path uploadPath = Paths.get(uploadsDir);
 
         if (!Files.exists(uploadPath)) {
             try {
 				Files.createDirectories(uploadPath);
-			} catch (java.io.IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (IOException e) {
+				throw new IllegalStateException("Unable to create uploads directory", e);
 			}
         }
 
         Path filePath = uploadPath.resolve(fileName);
         try {
 			Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-		} catch (java.io.IOException e) {
-			// Auto-generated catch block
-			e.printStackTrace();
+		} catch (IOException e) {
+			throw new IllegalStateException("Unable to store uploaded image", e);
 		}
 
-        //create Car object
         Car car = new Car();
         car.setId(id);
         car.setBrand(brand);
@@ -126,27 +129,23 @@ public class CarDao implements CarService {
 @Override
 public ResponseEntity<Car> updateCarWithImage(Long cid, String carJson, MultipartFile image) {
     try {
-        // Convert JSON string to Car object
         ObjectMapper objectMapper = new ObjectMapper();
         Car updatedCar = objectMapper.readValue(carJson, Car.class);
 
-        // Find existing car
         Car existingCar = cr.findById(cid).orElse(null);
         if (existingCar == null) {
             return ResponseEntity.notFound().build();
         }
 
-        // Update normal fields
         existingCar.setBrand(updatedCar.getBrand());
         existingCar.setModel(updatedCar.getModel());
         existingCar.setColor(updatedCar.getColor());
         existingCar.setPrice(updatedCar.getPrice());
         existingCar.setDescription(updatedCar.getDescription());
 
-        // If new image uploaded
         if (image != null && !image.isEmpty()) {
             String fileName = System.currentTimeMillis() + "_" + image.getOriginalFilename();
-            Path uploadPath = Paths.get("uploads");
+            Path uploadPath = Paths.get(uploadsDir);
 
             if (!Files.exists(uploadPath)) {
                 Files.createDirectories(uploadPath);
@@ -155,7 +154,7 @@ public ResponseEntity<Car> updateCarWithImage(Long cid, String carJson, Multipar
             Path filePath = uploadPath.resolve(fileName);
             Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
-            existingCar.setImageUrl(fileName); // update image filename in DB
+            existingCar.setImageUrl(fileName);
         }
 
         Car savedCar = cr.save(existingCar);

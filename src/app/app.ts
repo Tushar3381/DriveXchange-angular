@@ -15,6 +15,7 @@ import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } fro
 export class App {
   protected readonly title = signal('DriveXchange');
   currentUrl = '';
+  mobileMenuOpen = false;
 
   constructor(private router: Router) {
     this.currentUrl = this.router.url;
@@ -22,8 +23,17 @@ export class App {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.currentUrl = event.urlAfterRedirects;
+        this.mobileMenuOpen = false;
       }
     });
+  }
+
+  toggleMobileMenu(): void {
+    this.mobileMenuOpen = !this.mobileMenuOpen;
+  }
+
+  closeMobileMenu(): void {
+    this.mobileMenuOpen = false;
   }
 
   get showGlobalShell(): boolean {
@@ -38,5 +48,14 @@ export class App {
     ];
 
     return !hiddenShellRoutes.some((route) => this.currentUrl.startsWith(route));
+  }
+
+  get authReturnUrl(): string {
+    if (typeof window === 'undefined') {
+      return this.currentUrl || '/';
+    }
+
+    const { pathname, search, hash } = window.location;
+    return `${pathname}${search}${hash}` || '/';
   }
 }

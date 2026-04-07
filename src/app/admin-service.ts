@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Admin } from './admin';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { API_ENDPOINTS } from './core/api.config';
 
 @Injectable({
   providedIn: 'root'
@@ -14,16 +15,16 @@ export class AdminService {
 
   one(a1 : Admin)
   {
-    let url="http://localhost:8080/admin/saveAdminInfo";
+    let url = `${API_ENDPOINTS.admin}/saveAdminInfo`;
     return this.ht.post(url,a1);
   }
 
   login(aemail: string, apass: string): Observable<any> {
-    return this.ht.post("http://localhost:8080/admin/login", { aemail, apass });
+    return this.ht.post(`${API_ENDPOINTS.admin}/login`, { aemail, apass });
   }
 
   getDashboard(): Observable<any> {
-    return this.ht.get("http://localhost:8080/admin/dash");
+    return this.ht.get(`${API_ENDPOINTS.admin}/dash`);
   }
 
 }

@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/cars")
-@CrossOrigin(origins = "http://localhost:4200") // allow Angular frontend
 public class CarController {
 
     @Autowired

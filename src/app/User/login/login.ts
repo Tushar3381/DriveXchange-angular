@@ -1,7 +1,7 @@
 
 import { ToastService } from '../../service/toast.service';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { LoginService } from '../../service/login-service';
@@ -24,12 +24,16 @@ export class Login {
   submitted = false;
   loading = false;
   errorMessage = '';
+  returnUrl = '';
 
   constructor(
     private loginService: LoginService,
     private router: Router,
+    private route: ActivatedRoute,
     private toast: ToastService  
-  ) {}
+  ) {
+    this.returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '';
+  }
 
   login() {
 
@@ -55,8 +59,8 @@ export class Login {
         // Save user
         this.loginService.saveUser(res);
 
-        // Navigate
-        this.router.navigate(['/User/dashboard']);
+        // Navigate back to the last page/section when available.
+        this.redirectAfterLogin();
       },
       error: () => {
 
@@ -66,5 +70,39 @@ export class Login {
 
       }
     });
+  }
+
+  goBack(): void {
+    const target = this.sanitizedReturnUrl;
+    if (target) {
+      this.router.navigateByUrl(target);
+      return;
+    }
+
+    this.router.navigateByUrl('/');
+  }
+
+  private redirectAfterLogin(): void {
+    const target = this.sanitizedReturnUrl;
+    if (target) {
+      this.router.navigateByUrl(target);
+      return;
+    }
+
+    this.router.navigate(['/User/dashboard']);
+  }
+
+  private get sanitizedReturnUrl(): string {
+    const target = (this.returnUrl || '').trim();
+
+    if (!target || !target.startsWith('/') || target.startsWith('//')) {
+      return '';
+    }
+
+    if (target.startsWith('/User/login')) {
+      return '';
+    }
+
+    return target;
   }
 }

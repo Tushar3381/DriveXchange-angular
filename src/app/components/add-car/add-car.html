@@ -1,43 +1,59 @@
-<div class="container">
-  <h2>Add New Car</h2>
-  <form (ngSubmit)="onSubmit()" #carForm="ngForm" enctype="multipart/form-data">
-    <div>
-      <label for="id">Car ID:</label>
-      <input type="number" id="id" name="id" [(ngModel)]="car.id" required />
+<section class="form-page">
+  <div class="form-card">
+    <div class="form-head">
+      <div>
+        <p class="eyebrow">Create listing</p>
+        <h2>Add a new car</h2>
+        <p>Fill in the essentials clearly so the inventory stays consistent and easy to trust.</p>
+      </div>
     </div>
 
-    <div>
-      <label for="brand">Brand:</label>
-      <input type="text" id="brand" name="brand" [(ngModel)]="car.brand" required />
-    </div>
+    <form (ngSubmit)="onSubmit()" enctype="multipart/form-data" class="car-form">
+      <div class="form-grid">
+        <label class="field">
+          <span>Car ID</span>
+          <input type="number" id="id" name="id" [(ngModel)]="car.id" required />
+        </label>
 
-    <div>
-      <label for="model">Model:</label>
-      <input type="text" id="model" name="model" [(ngModel)]="car.model" required />
-    </div>
+        <label class="field">
+          <span>Brand</span>
+          <input type="text" id="brand" name="brand" [(ngModel)]="car.brand" required />
+        </label>
 
-    <div>
-      <label for="color">Color:</label>
-      <input type="text" id="color" name="color" [(ngModel)]="car.color" required />
-    </div>
+        <label class="field">
+          <span>Model</span>
+          <input type="text" id="model" name="model" [(ngModel)]="car.model" required />
+        </label>
 
-    <div>
-      <label for="price">Price:</label>
-      <input type="number" id="price" name="price" [(ngModel)]="car.price" required />
-    </div>
+        <label class="field">
+          <span>Color</span>
+          <input type="text" id="color" name="color" [(ngModel)]="car.color" required />
+        </label>
 
-    <div>
-      <label for="description">Description:</label>
-      <textarea id="description" name="description" [(ngModel)]="car.description"></textarea>
-    </div>
+        <label class="field field--full">
+          <span>Price</span>
+          <input type="number" id="price" name="price" [(ngModel)]="car.price" required />
+        </label>
 
-    <div>
-      <label for="image">Car Image:</label>
-      <input type="file" id="image" (change)="onFileSelected($event)" />
-    </div>
+        <label class="field field--full">
+          <span>Description</span>
+          <textarea id="description" name="description" rows="4" [(ngModel)]="car.description"></textarea>
+        </label>
 
-    <button type="submit">Add Car</button>
-  </form>
+        <label class="field field--full">
+          <span>Car image</span>
+          <input type="file" id="image" accept="image/*" (change)="onFileSelected($event)" />
+          <small>{{ selectedFileName || 'Upload a clean image to improve listing quality.' }}</small>
+        </label>
+      </div>
 
-  <p *ngIf="successMsg">{{ successMsg }}</p>
-</div>
+      <div class="form-actions">
+        <button type="submit" class="primary-btn">Add car</button>
+      </div>
+    </form>
+
+    <p *ngIf="successMsg" class="form-message" [class.is-error]="messageType === 'error'">
+      {{ successMsg }}
+    </p>
+  </div>
+</section>

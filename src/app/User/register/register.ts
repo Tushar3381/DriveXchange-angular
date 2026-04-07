@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { API_ENDPOINTS } from '../../core/api.config';
 
 
 @Component({
@@ -31,8 +32,15 @@ showConfirmPassword = false;
   errorMessage = '';
   submitted = false;
   loading = false;
+  returnUrl = '';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '';
+  }
 
   register() {
 
@@ -83,13 +91,15 @@ showConfirmPassword = false;
 
     this.loading = true;
 
-    this.http.post('http://localhost:8080/users/register', user, { responseType: 'text' })
+    this.http.post(`${API_ENDPOINTS.users}/register`, user, { responseType: 'text' })
       .subscribe({
         next: (res) => {
           this.loading = false;
           this.message = res;
           setTimeout(() => {
-            this.router.navigate(['/User/login']);
+            this.router.navigate(['/User/login'], {
+              queryParams: this.sanitizedReturnUrl ? { returnUrl: this.sanitizedReturnUrl } : null
+            });
           }, 1500);
         },
         error: (err) => {
@@ -97,5 +107,29 @@ showConfirmPassword = false;
           this.errorMessage = err.error || "Registration failed";
         }
       });
+  }
+
+  goBack(): void {
+    const target = this.sanitizedReturnUrl;
+    if (target) {
+      this.router.navigateByUrl(target);
+      return;
+    }
+
+    this.router.navigateByUrl('/');
+  }
+
+  private get sanitizedReturnUrl(): string {
+    const target = (this.returnUrl || '').trim();
+
+    if (!target || !target.startsWith('/') || target.startsWith('//')) {
+      return '';
+    }
+
+    if (target.startsWith('/User/register')) {
+      return '';
+    }
+
+    return target;
   }
 }

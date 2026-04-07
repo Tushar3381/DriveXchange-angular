@@ -1,32 +1,72 @@
-  <!-- <div class="signup-container">
-  <h3>Login Form</h3>
+<section class="auth-shell">
+  <div class="auth-card">
+    <aside class="auth-panel auth-panel--brand">
+      <p class="eyebrow">DriveXchange Admin</p>
+      <h1>Welcome back to the control center.</h1>
+      <p class="brand-copy">
+        Review approvals, manage live inventory, and handle customer requests from one focused workspace.
+      </p>
 
-  <form>
-     <label for="AdminName">Admin Name:</label>
-    <input type="text" placeholder="Admin Name" required /> 
-    <label for="AdminEmail">Admin Email:</label>
-    <input type="email" placeholder="Admin Email" required />
+      <div class="feature-list">
+        <div class="feature-item">
+          <strong>Faster reviews</strong>
+          <span>See queues, requests, and inventory updates in one place.</span>
+        </div>
+        <div class="feature-item">
+          <strong>Cleaner workflow</strong>
+          <span>Use a simple admin flow without extra clicks or clutter.</span>
+        </div>
+      </div>
+    </aside>
 
-    <label for="AdminPassword">Admin Password:</label>
-    <input type="password" placeholder="Admin Password" required />
+    <div class="auth-panel auth-panel--form">
+      <div class="form-head">
+        <p class="eyebrow">Admin login</p>
+        <h2>Sign in</h2>
+        <p>Use your admin credentials to access the dashboard.</p>
+      </div>
 
-    <button (click)="goToDashboard()">Login</button>
-  </form>
-</div>
-    -->
+      <form (ngSubmit)="goToDashboard()" class="auth-form">
+        <label class="field">
+          <span>Email address</span>
+          <input
+            type="email"
+            [(ngModel)]="aemail"
+            name="aemail"
+            placeholder="admin@drivexchange.com"
+            autocomplete="email"
+            required
+          />
+        </label>
 
-    <div class="signup-container">
-  <h3>Login Form</h3>
+        <label class="field">
+          <span>Password</span>
+          <div class="password-field">
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              [(ngModel)]="apass"
+              name="apass"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              required
+            />
+            <button type="button" class="toggle-btn" (click)="togglePasswordVisibility()">
+              {{ showPassword ? 'Hide' : 'Show' }}
+            </button>
+          </div>
+        </label>
 
-  <form (ngSubmit)="goToDashboard()">
-    <label for="AdminEmail">Admin Email:</label>
-    <input type="email" [(ngModel)]="aemail" name="aemail" placeholder="Admin Email" required />
-     
-    <label for="AdminPassword">Admin Password:</label>
-    <input type="password" [(ngModel)]="apass" name="apass" placeholder="Admin Password" required />
+        <p *ngIf="errorMessage" class="feedback feedback--error">{{ errorMessage }}</p>
 
-    <button type="submit">Login</button>
-  </form>
+        <button type="submit" class="primary-btn" [disabled]="isLoading">
+          {{ isLoading ? 'Signing in...' : 'Login to dashboard' }}
+        </button>
+      </form>
 
-  <p *ngIf="errorMessage" style="color:red;">{{ errorMessage }}</p>
-</div>
+      <p class="auth-switch">
+        Admin access is restricted.
+        <span>Only authorized system setup can create the first admin account.</span>
+      </p>
+    </div>
+  </div>
+</section>

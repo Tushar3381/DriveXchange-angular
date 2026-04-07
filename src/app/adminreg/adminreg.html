@@ -1,47 +1,112 @@
-<!-- <h2>Admin Sign Up</h2>
+<section class="auth-shell">
+  <div class="auth-card">
+    <aside class="auth-panel auth-panel--brand">
+      <p class="eyebrow">DriveXchange Admin</p>
+      <h1>Create a clean admin workspace account.</h1>
+      <p class="brand-copy">
+        Set up access for marketplace operations with a streamlined signup flow and consistent design.
+      </p>
 
-<form (ngSubmit)="onSubmit()">
-  <label>Name:</label>
-  <input type="text" [(ngModel)]="adminName" name="name" required />
+      <div class="feature-list">
+        <div class="feature-item">
+          <strong>Professional workflow</strong>
+          <span>Onboard admins into the same polished control panel experience.</span>
+        </div>
+        <div class="feature-item">
+          <strong>Simple access setup</strong>
+          <span>Only the core details are needed to get started.</span>
+        </div>
+      </div>
+    </aside>
 
-  <label>Email:</label>
-  <input type="email" [(ngModel)]="adminEmail" name="email" required />
+    <div class="auth-panel auth-panel--form">
+      <div class="form-head">
+        <p class="eyebrow">Admin signup</p>
+        <h2>Create account</h2>
+        <p>Use this only for the first secure admin setup with the bootstrap key.</p>
+      </div>
 
-  <label>Password:</label>
-  <input type="password" [(ngModel)]="adminPassword" name="password" required />
+      <form #form="ngForm" (ngSubmit)="onSubmit(form)" class="auth-form">
+        <label class="field">
+          <span>Setup key</span>
+          <input
+            type="password"
+            [(ngModel)]="setupKey"
+            name="setupKey"
+            placeholder="Enter the secure bootstrap key"
+            autocomplete="one-time-code"
+            required
+          />
+          <small *ngIf="form.submitted && !form.controls['setupKey']?.valid" class="field-error">
+            Setup key is required.
+          </small>
+        </label>
 
-  <button type="submit">Register</button>
-</form>
+        <label class="field">
+          <span>Full name</span>
+          <input
+            type="text"
+            [(ngModel)]="adminName"
+            name="name"
+            placeholder="Admin name"
+            autocomplete="name"
+            required
+          />
+          <small *ngIf="form.submitted && !form.controls['name']?.valid" class="field-error">
+            Name is required.
+          </small>
+        </label>
 
-<p>Already registered? <a routerLink="/login">Login here</a></p> -->
+        <label class="field">
+          <span>Email address</span>
+          <input
+            type="email"
+            [(ngModel)]="adminEmail"
+            name="email"
+            placeholder="admin@drivexchange.com"
+            autocomplete="email"
+            required
+            email
+          />
+          <small *ngIf="form.submitted && !form.controls['email']?.valid" class="field-error">
+            Valid email is required.
+          </small>
+        </label>
 
-<h2>Admin Sign Up</h2>
+        <label class="field">
+          <span>Password</span>
+          <div class="password-field">
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              [(ngModel)]="adminPassword"
+              name="password"
+              placeholder="Create a password"
+              autocomplete="new-password"
+              required
+            />
+            <button type="button" class="toggle-btn" (click)="togglePasswordVisibility()">
+              {{ showPassword ? 'Hide' : 'Show' }}
+            </button>
+          </div>
+          <small *ngIf="form.submitted && !form.controls['password']?.valid" class="field-error">
+            Password is required.
+          </small>
+        </label>
 
-<form #form="ngForm" (ngSubmit)="onSubmit(form)">
-  <label>Name:</label>
-  <input type="text" [(ngModel)]="adminName" name="name" required />
-  <div *ngIf="form.submitted && !form.controls['name']?.valid" style="color:red;">
-    Name is required
+        <p *ngIf="errorMessage" class="feedback feedback--error">{{ errorMessage }}</p>
+
+        <button type="submit" class="primary-btn" [disabled]="isSubmitting">
+          {{ isSubmitting ? 'Creating account...' : 'Create admin account' }}
+        </button>
+      </form>
+
+      <p class="auth-switch">
+        Already registered?
+        <a routerLink="/Admin/login">Login here</a>
+      </p>
+    </div>
   </div>
-
-  <label>Email:</label>
-  <input type="email" [(ngModel)]="adminEmail" name="email" required />
-  <div *ngIf="form.submitted && !form.controls['email']?.valid" style="color:red;">
-    Valid email is required
-  </div>
-
-  <label>Password:</label>
-  <input type="password" [(ngModel)]="adminPassword" name="password" required />
-  <div *ngIf="form.submitted && !form.controls['password']?.valid" style="color:red;">
-    Password is required
-  </div>
-
-  <button type="submit">Register</button>
-</form>
-<!-- <p>Already registered? <button (click)="handleclick()" routerLink="Login">Login</button></p> -->
-
-
-<!-- <a>Already registered?  <a routerLink="/Login">Login </a></a> -->
+</section>
 
 
 

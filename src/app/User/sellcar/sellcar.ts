@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { API_ENDPOINTS } from '../../core/api.config';
 
 @Component({
   selector: 'app-sell-car',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterLink],
+  imports: [FormsModule, CommonModule],
   templateUrl: './sellcar.html',
   styleUrls: ['./sellcar.css']
 })
@@ -49,10 +49,10 @@ export class SellCar {
   });
 
   this.http.post(
-  'http://localhost:8080/sellcar/submit',
-  formData,
-  { responseType: 'text' }
-).subscribe({
+    `${API_ENDPOINTS.sellcar}/submit`,
+    formData,
+    { responseType: 'text' }
+  ).subscribe({
   next: (res) => {
     alert('Car is submitted. Please wait for approval from DriveXchange.');
     this.message = res;

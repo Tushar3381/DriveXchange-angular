@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BuyNewCarService } from '../../service/buy-new-car-service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { MEDIA_ENDPOINTS } from '../../core/api.config';
 
 
 
@@ -16,6 +17,7 @@ import { Router } from '@angular/router';
 export class CarDetailsComponent implements OnInit {
 
   car: any;
+  readonly uploadsBase = MEDIA_ENDPOINTS.uploads;
   
 
   constructor(

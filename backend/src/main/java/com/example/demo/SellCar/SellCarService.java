@@ -1,5 +1,6 @@
 package com.example.demo.SellCar;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,7 +14,7 @@ public class SellCarService {
     private final SellCarRepo repo;
 
     // Folder where images will be stored
-    private final Path uploadPath = Paths.get("car-uploads");
+    private final Path uploadPath;
 
     // Allowed image formats
     private static final List<String> ALLOWED_FILE_TYPES = List.of(
@@ -22,8 +23,11 @@ public class SellCarService {
             "image/webp"
     );
 
-    public SellCarService(SellCarRepo repo) {
+    public SellCarService(
+            SellCarRepo repo,
+            @Value("${app.car-uploads-dir:car-uploads}") String uploadDirectory) {
         this.repo = repo;
+        this.uploadPath = Paths.get(uploadDirectory);
 
         // Ensure upload folder exists
         try {

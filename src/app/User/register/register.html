@@ -1,4 +1,11 @@
 <section class="reg-shell">
+  <div class="reg-mobile-top">
+    <button type="button" class="reg-back-circle" (click)="goBack()" aria-label="Back to home">
+      <span aria-hidden="true">&#8592;</span>
+    </button>
+    <p>Back to Home</p>
+  </div>
+
   <div class="reg-card">
     <header class="reg-header">
       <p>Create DriveXchange Profile</p>
@@ -91,7 +98,7 @@
 
     <p class="bottom-line">
       Already have an account?
-      <a routerLink="/User/login">Login</a>
+      <a routerLink="/User/login" [queryParams]="returnUrl ? { returnUrl: returnUrl } : null">Login</a>
     </p>
   </div>
 </section>

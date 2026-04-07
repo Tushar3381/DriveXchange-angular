@@ -13,9 +13,9 @@
 .gallery-card,
 .info-card {
   border-radius: 20px;
-  border: 1px solid #dae4ef;
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 16px 34px rgba(11, 33, 56, 0.1);
+  border: 1px solid var(--dx-border);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: var(--dx-shadow-soft);
 }
 
 .gallery-card {
@@ -43,7 +43,7 @@
 .thumb-grid button {
   padding: 0;
   border-radius: 10px;
-  border: 1px solid #d7e2ee;
+  border: 1px solid var(--dx-border);
   overflow: hidden;
   background: #fff;
   cursor: pointer;
@@ -61,7 +61,7 @@
 
 .eyebrow {
   margin: 0;
-  color: #cc9f2d;
+  color: #b6842e;
   text-transform: uppercase;
   letter-spacing: 0.13em;
   font-size: 0.72rem;
@@ -70,7 +70,7 @@
 
 .info-card h1 {
   margin: 0.55rem 0 0;
-  color: #123250;
+  color: #1b2f43;
   font-size: clamp(1.35rem, 1.9vw, 2rem);
 }
 
@@ -89,15 +89,15 @@
 }
 
 .info-grid div {
-  border: 1px solid #d4dfeb;
+  border: 1px solid var(--dx-border);
   border-radius: 12px;
   padding: 0.7rem;
-  background: #fbfdff;
+  background: #ffffff;
 }
 
 .info-grid span {
   display: block;
-  color: #5a7088;
+  color: #5f6f7f;
   font-size: 0.76rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -106,7 +106,7 @@
 .info-grid strong {
   margin-top: 0.25rem;
   display: block;
-  color: #173654;
+  color: #1b2f43;
 }
 
 .description {
@@ -116,12 +116,12 @@
 .description h2 {
   margin: 0;
   font-size: 1rem;
-  color: #173654;
+  color: #1b2f43;
 }
 
 .description p {
   margin: 0.48rem 0 0;
-  color: #556c83;
+  color: #5f6f7f;
   line-height: 1.55;
 }
 
@@ -134,8 +134,8 @@
   height: 44px;
   border-radius: 10px;
   text-decoration: none;
-  background: linear-gradient(135deg, #143c65, #1f5482);
-  color: #edf5fd;
+  background: linear-gradient(135deg, #233c55, #1a2f44);
+  color: #f2f5f8;
   font-weight: 800;
 }
 

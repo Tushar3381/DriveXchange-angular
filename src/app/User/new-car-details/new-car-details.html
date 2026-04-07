@@ -1,6 +1,6 @@
 <section class="detail-shell" *ngIf="car">
   <article class="detail-media">
-    <img [src]="'http://localhost:8080/uploads/' + car.imageUrl" alt="Car image" />
+    <img [src]="uploadsBase + '/' + car.imageUrl" alt="Car image" />
   </article>
 
   <article class="detail-content">

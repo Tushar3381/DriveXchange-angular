@@ -3,6 +3,7 @@ import { BuyNewCarService } from '../../service/buy-new-car-service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MEDIA_ENDPOINTS } from '../../core/api.config';
 
 @Component({
   selector: 'app-buy-new-car',
@@ -17,6 +18,7 @@ export class BuyNewCarComponent implements OnInit {
   searchTerm = '';
   budgetFilter = 'all';
   sortBy = 'default';
+  readonly uploadsBase = MEDIA_ENDPOINTS.uploads;
 
   constructor(
     private carService: BuyNewCarService,

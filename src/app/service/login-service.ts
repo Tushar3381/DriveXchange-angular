@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { API_ENDPOINTS } from '../core/api.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  baseUrl = "http://localhost:8080/users";
+  baseUrl = API_ENDPOINTS.users;
 
   constructor(private http: HttpClient) { }
 

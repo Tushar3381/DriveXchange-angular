@@ -1,31 +1,58 @@
-<div class="container">
-  <h2>Edit Car</h2>
-  <form (ngSubmit)="onSubmit()">
-    <div>
-      <label>Brand:</label>
-      <input type="text" [(ngModel)]="car.brand" name="brand" required />
-    </div>
-    <div>
-      <label>Model:</label>
-      <input type="text" [(ngModel)]="car.model" name="model" required />
-    </div>
-    <div>
-      <label>Color:</label>
-      <input type="text" [(ngModel)]="car.color" name="color" required />
-    </div>
-    <div>
-      <label>Price:</label>
-      <input type="number" [(ngModel)]="car.price" name="price" required />
-    </div>
-    <div>
-      <label>Description:</label>
-      <textarea [(ngModel)]="car.description" name="description"></textarea>
-    </div>
-    <div>
-      <label>Upload New Image (optional):</label>
-      <input type="file" (change)="onFileSelected($event)" />
+<section class="form-page">
+  <div class="form-card">
+    <div class="form-head">
+      <div>
+        <p class="eyebrow">Update listing</p>
+        <h2>Edit car details</h2>
+        <p>Adjust the listing cleanly so inventory updates stay fast and consistent.</p>
+      </div>
     </div>
 
-    <button type="submit">Update Car</button>
-  </form>
-</div>
+    <div class="preview-card" *ngIf="previewImageUrl">
+      <div>
+        <span>Current image</span>
+        <strong>{{ car.brand }} {{ car.model }}</strong>
+      </div>
+      <img [src]="previewImageUrl" [alt]="car.brand + ' ' + car.model" />
+    </div>
+
+    <form (ngSubmit)="onSubmit()" class="car-form">
+      <div class="form-grid">
+        <label class="field">
+          <span>Brand</span>
+          <input type="text" [(ngModel)]="car.brand" name="brand" required />
+        </label>
+
+        <label class="field">
+          <span>Model</span>
+          <input type="text" [(ngModel)]="car.model" name="model" required />
+        </label>
+
+        <label class="field">
+          <span>Color</span>
+          <input type="text" [(ngModel)]="car.color" name="color" required />
+        </label>
+
+        <label class="field">
+          <span>Price</span>
+          <input type="number" [(ngModel)]="car.price" name="price" required />
+        </label>
+
+        <label class="field field--full">
+          <span>Description</span>
+          <textarea [(ngModel)]="car.description" name="description" rows="4"></textarea>
+        </label>
+
+        <label class="field field--full">
+          <span>Replace image</span>
+          <input type="file" accept="image/*" (change)="onFileSelected($event)" />
+          <small>{{ selectedImageName || 'Leave empty to keep the current image.' }}</small>
+        </label>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="primary-btn">Update car</button>
+      </div>
+    </form>
+  </div>
+</section>

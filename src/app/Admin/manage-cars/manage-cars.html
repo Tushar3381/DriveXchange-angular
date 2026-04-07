@@ -1,64 +1,132 @@
-<table class="table table-bordered table-striped mt-3">
-  <thead class="table-dark">
-    <tr>
-      <th>ID</th>
-      <th>Brand</th>
-      <th>Description</th>
-      <th>Model</th>
-      <th>Owner</th>
-      <th>Fuel</th>
-      <th>Contact </th>
-      <th>Price</th>
-      <th>Image</th>
-      <th>Status</th>
-      <th>Action</th>
-    </tr>
-  </thead>
+<section class="data-page">
+  <div class="page-head">
+    <div>
+      <p class="eyebrow">Seller approval queue</p>
+      <h2>Manage submitted used cars</h2>
+      <p>
+        Review seller details, inspect listing quality, and update approval status with less clutter.
+      </p>
+    </div>
 
-  <tbody>
-    <tr *ngFor="let car of filteredCars">
-      <td>{{ car.id }}</td>
-      <td>{{ car.brand }}</td>
-      <td>{{ car.description }}</td>
-      <td>{{ car.model }}</td>
-      <td>{{ car.ownerName }}</td>
-      <td>{{ car.fuelType }}</td>
-      <td>{{ car.contactNumber }}</td>
-      <td>{{ car.price }}</td>
+    <label class="filter-control">
+      <span>Filter by status</span>
+      <select [(ngModel)]="filterStatus" (ngModelChange)="applyFilter()">
+        <option *ngFor="let option of filterOptions" [value]="option">{{ option }}</option>
+      </select>
+    </label>
+  </div>
 
-      <!-- Image Preview -->
-      <td>
-  <img
-    *ngIf="car.images"
-    [src]="'http://localhost:8080/car-uploads/' + car.images.split(',')[0]"
-    width="80"
-    height="60"
-    style="object-fit: cover; border-radius: 5px;"
-  />
-</td>
+  <div class="stats-grid">
+    <article class="stat-card">
+      <span>Total submissions</span>
+      <strong>{{ totalCars }}</strong>
+    </article>
 
+    <article class="stat-card stat-card--pending">
+      <span>Pending review</span>
+      <strong>{{ pendingCars }}</strong>
+    </article>
 
-      <!-- Status Badge -->
-      <td>
-        <span class="badge bg-warning" *ngIf="car.status === 'PENDING'">Pending</span>
-        <span class="badge bg-success" *ngIf="car.status === 'APPROVED'">Approved</span>
-        <span class="badge bg-danger" *ngIf="car.status === 'REJECTED'">Rejected</span>
-      </td>
+    <article class="stat-card stat-card--approved">
+      <span>Approved</span>
+      <strong>{{ approvedCars }}</strong>
+    </article>
 
-      <!-- Approve / Reject Buttons -->
-      <td>
-        <button class="btn btn-success btn-sm me-2"
-                (click)="updateStatus(car.id, 'APPROVED')"
-                [disabled]="car.status === 'APPROVED'">
-          Approve
-        </button>
+    <article class="stat-card stat-card--rejected">
+      <span>Rejected</span>
+      <strong>{{ rejectedCars }}</strong>
+    </article>
+  </div>
 
-        <button class="btn btn-danger btn-sm"
-                (click)="updateStatus(car.id, 'REJECTED')"
-                [disabled]="car.status === 'REJECTED'">
-          Reject
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <div class="table-card" *ngIf="filteredCars.length; else emptyState">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Vehicle</th>
+            <th>Owner</th>
+            <th>Fuel</th>
+            <th>Contact</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let car of filteredCars; trackBy: trackByCarId">
+            <td class="mono">#{{ car.id }}</td>
+
+            <td>
+              <div class="vehicle-cell">
+                <div class="vehicle-thumb" *ngIf="getPrimaryImage(car); else noImage">
+                  <img [src]="getPrimaryImage(car)" [alt]="car.brand + ' ' + car.model" />
+                </div>
+
+                <ng-template #noImage>
+                  <div class="vehicle-thumb vehicle-thumb--empty">No image</div>
+                </ng-template>
+
+                <div>
+                  <strong>{{ car.brand }} {{ car.model }}</strong>
+                  <p>{{ car.description || 'Seller did not add a description.' }}</p>
+                </div>
+              </div>
+            </td>
+
+            <td>
+              <strong>{{ car.ownerName || 'Unknown owner' }}</strong>
+            </td>
+
+            <td>{{ car.fuelType || 'Not shared' }}</td>
+            <td class="mono">{{ car.contactNumber || 'Not shared' }}</td>
+            <td>{{ car.price | currency: 'INR':'symbol':'1.0-0' }}</td>
+
+            <td>
+              <span
+                class="status-badge"
+                [ngClass]="{
+                  'status-badge--pending': car.status === 'PENDING',
+                  'status-badge--approved': car.status === 'APPROVED',
+                  'status-badge--rejected': car.status === 'REJECTED'
+                }"
+              >
+                {{ car.status }}
+              </span>
+            </td>
+
+            <td>
+              <div class="action-group">
+                <button
+                  type="button"
+                  class="action-btn action-btn--approve"
+                  (click)="updateStatus(car.id, 'APPROVED')"
+                  [disabled]="car.status === 'APPROVED'"
+                >
+                  Approve
+                </button>
+
+                <button
+                  type="button"
+                  class="action-btn action-btn--reject"
+                  (click)="updateStatus(car.id, 'REJECTED')"
+                  [disabled]="car.status === 'REJECTED'"
+                >
+                  Reject
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <ng-template #emptyState>
+    <article class="empty-card">
+      <h3>No listings found for this filter</h3>
+      <p>Try another status to review the rest of the seller submissions.</p>
+    </article>
+  </ng-template>
+</section>

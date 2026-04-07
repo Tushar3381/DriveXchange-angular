@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Car } from '../Models/car';
+import { API_ENDPOINTS } from '../core/api.config';
 
 
 //ADMIN ADDED CARS ONLY
@@ -11,18 +12,18 @@ import { Car } from '../Models/car';
   providedIn: 'root'
 })
 export class CarService {
-  private baseUrl = 'http://localhost:8080/cars';
+  private baseUrl = API_ENDPOINTS.cars;
 
   constructor(private http: HttpClient) {}
 
   // Get all cars
   getAllCars() {
-  return this.http.get<Car[]>('http://localhost:8080/cars/fetchcars');
+  return this.http.get<Car[]>(`${API_ENDPOINTS.cars}/fetchcars`);
 }
 
   // Get car by ID
   getCarById(carId: number) {
-  return this.http.get<Car>(`http://localhost:8080/cars/getCarbyId/${carId}`);
+  return this.http.get<Car>(`${API_ENDPOINTS.cars}/getCarbyId/${carId}`);
 }
 
   // Add car (without image)
@@ -53,7 +54,7 @@ export class CarService {
 
   // Delete car
   deleteCar(carId: number) {
-  return this.http.delete(`http://localhost:8080/cars/del/${carId}`);
+  return this.http.delete(`${API_ENDPOINTS.cars}/del/${carId}`);
 }
 
   // Search by brand

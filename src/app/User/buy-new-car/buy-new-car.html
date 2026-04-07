@@ -39,7 +39,7 @@
   <section class="listing-grid" *ngIf="filteredCars.length; else noResults">
     <article class="car-card" *ngFor="let car of filteredCars">
       <div class="car-card__media">
-        <img [src]="'http://localhost:8080/uploads/' + car.imageUrl" alt="Car image" />
+        <img [src]="uploadsBase + '/' + car.imageUrl" alt="Car image" />
       </div>
 
       <div class="car-card__body">

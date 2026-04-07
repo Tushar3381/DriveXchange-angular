@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 
 public interface AdminService {
 	
-	public ResponseEntity<Admin> register(Admin a1);
+	public ResponseEntity<?> register(AdminRegistrationRequest request);
 	
 	public List<Admin> getallAdmins();
 	

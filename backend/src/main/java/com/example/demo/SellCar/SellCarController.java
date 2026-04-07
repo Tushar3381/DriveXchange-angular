@@ -10,7 +10,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/sellcar")
-@CrossOrigin(origins = "http://localhost:4200")
 public class SellCarController {
 
     private final SellCarService service;

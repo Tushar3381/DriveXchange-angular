@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { API_ENDPOINTS } from '../core/api.config';
 
 // CARS FOR THE SELLCAR
 
@@ -10,7 +11,7 @@ import { Observable } from 'rxjs';
 })
 export class SellCarService {
 
-  private baseUrl = 'http://localhost:8080/sellcar';
+  private baseUrl = API_ENDPOINTS.sellcar;
 
   constructor(private http: HttpClient) {}
 

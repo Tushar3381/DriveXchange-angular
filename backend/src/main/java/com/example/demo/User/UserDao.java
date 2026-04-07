@@ -1,5 +1,9 @@
 package com.example.demo.User;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -10,34 +14,30 @@ public class UserDao implements UserService {
 
     @Autowired
     private UserRepo ur;
-    
-    
-//Password encoder instance
+
+    @Autowired
+    private PasswordResetTokenRepo passwordResetTokenRepo;
+
+    @Autowired
+    private PasswordResetMailService passwordResetMailService;
+
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-    
-    
-//USER REGISTER
+
     @Override
     public ResponseEntity<?> register(RegisterRequest request) {
-
-        // Check if email already exists
         if (ur.findByEmail(request.getEmail()) != null) {
             return ResponseEntity.badRequest().body("Email already registered");
         }
 
-        // Check password match
         if (!request.getPassword().equals(request.getConfirmPassword())) {
             return ResponseEntity.badRequest().body("Passwords do not match");
         }
 
-        // Create User object
         User user = new User();
         user.setName(request.getName());
         user.setEmail(request.getEmail());
         user.setGender(request.getGender());
         user.setContactnumber(request.getContactnumber());
-
-        // Encode password
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
         ur.save(user);
@@ -45,8 +45,6 @@ public class UserDao implements UserService {
         return ResponseEntity.ok("User registered successfully");
     }
 
- 
-//USER LOGIN
     @Override
     public ResponseEntity<?> login(String email, String password) {
         User user = ur.findByEmail(email);
@@ -55,18 +53,15 @@ public class UserDao implements UserService {
             return ResponseEntity.status(404).body("❌ User not found");
         }
 
-//Match raw password with encoded password
         if (passwordEncoder.matches(password, user.getPassword())) {
             return ResponseEntity.ok(user);
-        } else {
-            return ResponseEntity.status(401).body("❌ Invalid password");
         }
+
+        return ResponseEntity.status(401).body("❌ Invalid password");
     }
-    
-//GET USER PROFILE
+
     @Override
     public ResponseEntity<User> getProfile(Long id) {
-
         User user = ur.findById(id).orElse(null);
 
         if (user == null) {
@@ -75,11 +70,9 @@ public class UserDao implements UserService {
 
         return ResponseEntity.ok(user);
     }
-//UPDATE USER PROFILE
 
     @Override
     public ResponseEntity<User> updateProfile(User user) {
-
         User existing = ur.findById(user.getId()).orElse(null);
 
         if (existing == null) {
@@ -95,10 +88,8 @@ public class UserDao implements UserService {
         return ResponseEntity.ok(existing);
     }
 
-//USER CAN CHANGE PASSWORD 
     @Override
     public ResponseEntity<?> changePassword(Long id, String oldPassword, String newPassword) {
-
         User user = ur.findById(id).orElse(null);
 
         if (user == null) {
@@ -115,18 +106,86 @@ public class UserDao implements UserService {
         return ResponseEntity.ok("Password changed successfully");
     }
 
-//USER REGISTRATION ALL FILED ARE MANDETORY
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    @Override
+    public ResponseEntity<?> forgotPassword(ForgotPasswordRequest request) {
+        if (!passwordResetMailService.isDeliveryConfigured()
+                && !passwordResetMailService.isDebugLinkExposureEnabled()) {
+            return ResponseEntity.status(503)
+                    .body("Password reset email delivery is not configured yet. Please contact support.");
+        }
+
+        User user = ur.findByEmail(request.getEmail());
+        PasswordResetMailService.DeliveryResult deliveryResult = null;
+
+        if (user != null) {
+            List<PasswordResetToken> activeTokens = passwordResetTokenRepo.findByEmailAndUsedAtIsNull(user.getEmail());
+            LocalDateTime now = LocalDateTime.now();
+
+            for (PasswordResetToken token : activeTokens) {
+                token.setUsedAt(now);
+            }
+            passwordResetTokenRepo.saveAll(activeTokens);
+
+            PasswordResetToken resetToken = new PasswordResetToken();
+            resetToken.setEmail(user.getEmail());
+            resetToken.setToken(UUID.randomUUID().toString());
+            resetToken.setExpiresAt(now.plusMinutes(15));
+
+            passwordResetTokenRepo.save(resetToken);
+            deliveryResult = passwordResetMailService.sendResetLink(user.getEmail(), resetToken.getToken());
+        }
+
+        if (deliveryResult != null && deliveryResult.getDebugResetLink() != null) {
+            return ResponseEntity.ok(
+                    "Development reset link: " + deliveryResult.getDebugResetLink()
+                            + " | Email delivery is not configured, so the link was returned for local testing.");
+        }
+
+        if (deliveryResult != null && !deliveryResult.wasDelivered() && !deliveryResult.hasConfigurationIssue()) {
+            return ResponseEntity.status(503)
+                    .body("We could not send the reset email right now. " + deliveryResult.getFailureReason());
+        }
+
+        return ResponseEntity.ok(
+                "If an account exists for that email, a reset link has been sent. Please check your inbox.");
+    }
+
+    @Override
+    public ResponseEntity<?> resetPassword(ResetPasswordRequest request) {
+        PasswordResetToken resetToken = passwordResetTokenRepo.findByTokenAndUsedAtIsNull(request.getToken())
+                .orElse(null);
+
+        if (resetToken == null) {
+            return ResponseEntity.badRequest().body("This reset link is invalid or has already been used.");
+        }
+
+        if (resetToken.getExpiresAt().isBefore(LocalDateTime.now())) {
+            resetToken.setUsedAt(LocalDateTime.now());
+            passwordResetTokenRepo.save(resetToken);
+            return ResponseEntity.badRequest().body("This reset link has expired. Please request a new one.");
+        }
+
+        if (!request.getNewPassword().equals(request.getConfirmPassword())) {
+            return ResponseEntity.badRequest().body("Passwords do not match.");
+        }
+
+        if (request.getNewPassword().length() < 6) {
+            return ResponseEntity.badRequest().body("Password must be at least 6 characters.");
+        }
+
+        User user = ur.findByEmail(resetToken.getEmail());
+        if (user == null) {
+            resetToken.setUsedAt(LocalDateTime.now());
+            passwordResetTokenRepo.save(resetToken);
+            return ResponseEntity.badRequest().body("This reset request is no longer valid.");
+        }
+
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        ur.save(user);
+
+        resetToken.setUsedAt(LocalDateTime.now());
+        passwordResetTokenRepo.save(resetToken);
+
+        return ResponseEntity.ok("Password reset successful. Please login with your new password.");
+    }
 }
-    

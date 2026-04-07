@@ -1,36 +1,73 @@
-<div class="container">
-  <h2>Car List</h2>
-  <p *ngIf="successMsg" class="success-msg">{{ successMsg }}</p>
+<section class="inventory-page">
+  <div class="page-head">
+    <div>
+      <p class="eyebrow">Inventory management</p>
+      <h2>Manage new-car listings</h2>
+      <p>Keep pricing, imagery, and product details polished for customers.</p>
+    </div>
 
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Brand</th>
-        <th>Model</th>
-        <th>Color</th>
-        <th>Price</th>
-        <th>Description</th>
-        <th>Image</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let car of cars">
-        <td>{{ car.id }}</td>
-        <td>{{ car.brand }}</td>
-        <td>{{ car.model }}</td>
-        <td>{{ car.color }}</td>
-        <td>{{ car.price }}</td>
-        <td>{{ car.description }}</td>
-        <td>
-          <img *ngIf="car.imageUrl" [src]="'http://localhost:8080/cars/uploads/' + car.imageUrl" width="80" />
-        </td>
-        <td>
-         <button class="btn-edit" (click)="editCar(car.id)">Edit</button>
-         <button class="btn-delete" (click)="deleteCar(car.id)">Delete</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+    <button type="button" class="primary-action" (click)="goToAddCar()">Add new car</button>
+  </div>
+
+  <div class="inventory-meta">
+    <article class="meta-card">
+      <span>Total listings</span>
+      <strong>{{ totalCars }}</strong>
+    </article>
+
+    <p *ngIf="successMsg" class="success-msg">{{ successMsg }}</p>
+  </div>
+
+  <div class="table-card" *ngIf="cars.length; else emptyState">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Vehicle</th>
+            <th>Color</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let car of cars; trackBy: trackByCarId">
+            <td class="mono">#{{ car.id }}</td>
+            <td>
+              <div class="vehicle-cell">
+                <div class="vehicle-thumb" *ngIf="getImageUrl(car); else noImage">
+                  <img [src]="getImageUrl(car)" [alt]="car.brand + ' ' + car.model" />
+                </div>
+
+                <ng-template #noImage>
+                  <div class="vehicle-thumb vehicle-thumb--empty">No image</div>
+                </ng-template>
+
+                <div>
+                  <strong>{{ car.brand }} {{ car.model }}</strong>
+                </div>
+              </div>
+            </td>
+            <td>{{ car.color }}</td>
+            <td>{{ car.price | currency: 'INR':'symbol':'1.0-0' }}</td>
+            <td class="description">{{ car.description || 'No description added yet.' }}</td>
+            <td>
+              <div class="action-group">
+                <button type="button" class="btn-edit" (click)="editCar(car.id)">Edit</button>
+                <button type="button" class="btn-delete" (click)="deleteCar(car.id)">Delete</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <ng-template #emptyState>
+    <article class="empty-card">
+      <h3>No cars have been added yet</h3>
+      <p>Create the first listing to start building the inventory.</p>
+    </article>
+  </ng-template>
+</section>

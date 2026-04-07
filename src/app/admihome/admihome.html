@@ -1,5 +1,79 @@
-<div class="content">
+<section class="overview-page">
+  <article class="overview-hero">
+    <div class="overview-hero__copy">
+      <p class="eyebrow">Daily command center</p>
+      <h2>Keep the admin workflow fast, calm, and easy to scan.</h2>
+      <p>
+        This workspace highlights the queues that matter most so you can review inventory,
+        process requests, and keep the marketplace updated without jumping between screens.
+      </p>
 
-     <img src="car1.jpg"/> 
-   
+      <div class="overview-hero__actions">
+        <a routerLink="/dash/adminapprove-car" class="primary-link">Review approvals</a>
+        <a routerLink="/dash/testdrive-requests" class="secondary-link">Open test drives</a>
+      </div>
+    </div>
+
+    <div class="overview-hero__panel">
+      <span>Last refreshed</span>
+      <strong>{{ lastUpdated | date: 'medium' }}</strong>
+      <p>{{ overview.approvedRequests }} approved test drive requests already handled.</p>
+    </div>
+  </article>
+
+  <div class="summary-grid" *ngIf="!isLoading; else loadingState">
+    <article
+      class="summary-card"
+      *ngFor="let card of summaryCards"
+      [ngClass]="'summary-card--' + card.tone"
+    >
+      <span>{{ card.label }}</span>
+      <strong>{{ card.value }}</strong>
+      <p>{{ card.detail }}</p>
+    </article>
   </div>
+
+  <ng-template #loadingState>
+    <div class="summary-grid">
+      <article class="summary-card summary-card--loading" *ngFor="let item of [1, 2, 3, 4]">
+        <span>Loading</span>
+        <strong>...</strong>
+        <p>Fetching current admin overview</p>
+      </article>
+    </div>
+  </ng-template>
+
+  <div class="overview-grid">
+    <article class="panel-card">
+      <div class="panel-card__header">
+        <div>
+          <p class="eyebrow">Quick actions</p>
+          <h3>Jump straight into the next task</h3>
+        </div>
+      </div>
+
+      <div class="action-list">
+        <a class="action-card" *ngFor="let action of quickActions" [routerLink]="action.route">
+          <div>
+            <strong>{{ action.title }}</strong>
+            <p>{{ action.description }}</p>
+          </div>
+          <span>{{ action.actionLabel }}</span>
+        </a>
+      </div>
+    </article>
+
+    <article class="panel-card panel-card--accent">
+      <div class="panel-card__header">
+        <div>
+          <p class="eyebrow">Workflow guide</p>
+          <h3>Recommended order for smoother operations</h3>
+        </div>
+      </div>
+
+      <ul class="tip-list">
+        <li *ngFor="let tip of workflowTips">{{ tip }}</li>
+      </ul>
+    </article>
+  </div>
+</section>

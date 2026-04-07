@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { API_ENDPOINTS } from './core/api.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarService {
 
-  private baseUrl = 'http://localhost:8080/sellcar';
+  private baseUrl = API_ENDPOINTS.sellcar;
 
   constructor(private http: HttpClient) {}
 

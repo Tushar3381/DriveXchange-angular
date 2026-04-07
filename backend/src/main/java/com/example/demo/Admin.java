@@ -30,7 +30,7 @@ public class Admin {
 	}
 	@Override
 	public String toString() {
-		return "Admin [aname=" + aname + ", aemail=" + aemail + ", apass=" + apass + "]";
+		return "Admin [aname=" + aname + ", aemail=" + aemail + "]";
 	}
 	
 	

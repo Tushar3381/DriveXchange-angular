@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { SellCarService } from '../../service/sell-car.Service';
 import { CommonModule } from '@angular/common';
 import { OnInit } from '@angular/core';
+import { MEDIA_ENDPOINTS } from '../../core/api.config';
 
 @Component({
   selector: 'app-used-car-details',
@@ -48,6 +49,6 @@ export class UsedCarDetails implements OnInit {
   }
 
   getImageUrl(img: string): string {
-    return 'http://localhost:8080/car-uploads/' + img;
+    return `${MEDIA_ENDPOINTS.carUploads}/${img}`;
   }
 }

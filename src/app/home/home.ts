@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
@@ -10,49 +10,24 @@ import { Router, RouterLink } from '@angular/router';
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent {
   searchKeyword = '';
   vehicleType: 'new' | 'used' = 'new';
   budget = 'any';
-  currentSlide = 0;
-  private sliderTimer: ReturnType<typeof setInterval> | null = null;
 
-  readonly heroSlides = [
-    {
-      tag: 'DriveXchange Marketplace',
-      title: 'Find the right car faster, from budget to premium.',
-      subtitle:
-        'Compare verified listings, shortlist confidently, and move from search to deal with clarity.',
-      image:
-        'https://images.pexels.com/photos/3802510/pexels-photo-3802510.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1200&w=1800'
-    },
-    {
-      tag: 'Buy Smart',
-      title: 'New and used collections curated for every buyer.',
-      subtitle:
-        'Search by model, budget, and type. Review trusted details before making your next move.',
-      image:
-        'https://images.pexels.com/photos/244206/pexels-photo-244206.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1200&w=1800'
-    },
-    {
-      tag: 'Sell With Confidence',
-      title: 'List your car and connect with serious buyers quickly.',
-      subtitle:
-        'Seller-friendly workflow, premium presentation, and visibility to high-intent users.',
-      image:
-        'https://images.pexels.com/photos/1719648/pexels-photo-1719648.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1200&w=1800'
-    }
-  ];
+  readonly heroContent = {
+    tag: 'DriveXchange Marketplace',
+    title: 'A clean, confident way to buy and sell cars.',
+    subtitle:
+      'Verified listings, simple comparisons, and a guided flow from search to deal.',
+    image:
+      'https://images.pexels.com/photos/120049/pexels-photo-120049.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1200&w=2000'
+  };
 
-  readonly brandRail = [
-    'Hyundai',
-    'Kia',
-    'Toyota',
-    'Maruti',
-    'Honda',
-    'Tata',
-    'Mahindra',
-    'BMW'
+  readonly heroStats = [
+    { value: '2,500+', label: 'Verified listings' },
+    { value: '1,200+', label: 'Happy buyers' },
+    { value: '180+', label: 'Dealer partners' }
   ];
 
   readonly newShowcase = [
@@ -63,7 +38,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       year: '2024',
       location: 'Mumbai',
       image:
-        'https://images.pexels.com/photos/244206/pexels-photo-244206.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=700&w=1100'
+        'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=800&w=1300'
     },
     {
       name: 'Honda City ZX',
@@ -72,7 +47,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       year: '2024',
       location: 'Pune',
       image:
-        'https://images.pexels.com/photos/100653/pexels-photo-100653.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=700&w=1100'
+        'https://images.pexels.com/photos/3874337/pexels-photo-3874337.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=800&w=1300'
     },
     {
       name: 'Kia Seltos GTX+',
@@ -81,7 +56,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       year: '2025',
       location: 'Bengaluru',
       image:
-        'https://images.pexels.com/photos/358070/pexels-photo-358070.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=700&w=1100'
+        'https://images.pexels.com/photos/3752169/pexels-photo-3752169.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=800&w=1300'
     }
   ];
 
@@ -93,7 +68,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       year: '2021',
       location: 'Delhi',
       image:
-        'https://images.pexels.com/photos/70912/pexels-photo-70912.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=700&w=1100'
+        'https://images.pexels.com/photos/70912/pexels-photo-70912.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=800&w=1300'
     },
     {
       name: 'Mercedes C-Class',
@@ -102,7 +77,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       year: '2020',
       location: 'Hyderabad',
       image:
-        'https://images.pexels.com/photos/164634/pexels-photo-164634.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=700&w=1100'
+        'https://images.pexels.com/photos/164634/pexels-photo-164634.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=800&w=1300'
     },
     {
       name: 'BMW 3 Series',
@@ -111,26 +86,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       year: '2019',
       location: 'Chennai',
       image:
-        'https://images.pexels.com/photos/193021/pexels-photo-193021.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=700&w=1100'
-    }
-  ];
-
-  readonly whyChooseFeatures = [
-    {
-      title: 'Luxury Selection',
-      description: 'Premium trims and high-demand models curated for confidence-led decisions.'
-    },
-    {
-      title: 'Verified Ownership',
-      description: 'Every used listing follows verification checks before appearing to buyers.'
-    },
-    {
-      title: 'Assisted Journey',
-      description: 'From shortlist to test drive and payment, every step is designed for clarity.'
-    },
-    {
-      title: 'Fast Seller Exposure',
-      description: 'Sellers gain visibility to active buyers with a clean, frictionless listing path.'
+        'https://images.pexels.com/photos/193021/pexels-photo-193021.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=800&w=1300'
     }
   ];
 
@@ -161,55 +117,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   ];
 
-  readonly testimonials = [
-    {
-      quote: 'The interface feels premium and the buying flow is very clear end-to-end.',
-      author: 'Rahul S.',
-      role: 'Buyer'
-    },
-    {
-      quote: 'I listed my car and got serious leads quickly. The UX is simple and effective.',
-      author: 'Priya M.',
-      role: 'Seller'
-    },
-    {
-      quote: 'The search and detail pages make comparisons easier than typical portals.',
-      author: 'Aman K.',
-      role: 'Power User'
-    }
-  ];
-
   constructor(private router: Router) {}
-
-  ngOnInit(): void {
-    this.sliderTimer = setInterval(() => {
-      this.nextSlide();
-    }, 5000);
-  }
-
-  ngOnDestroy(): void {
-    if (this.sliderTimer) {
-      clearInterval(this.sliderTimer);
-      this.sliderTimer = null;
-    }
-  }
-
-  get activeSlide() {
-    return this.heroSlides[this.currentSlide];
-  }
-
-  prevSlide(): void {
-    this.currentSlide =
-      this.currentSlide === 0 ? this.heroSlides.length - 1 : this.currentSlide - 1;
-  }
-
-  nextSlide(): void {
-    this.currentSlide = (this.currentSlide + 1) % this.heroSlides.length;
-  }
-
-  goToSlide(index: number): void {
-    this.currentSlide = index;
-  }
 
   onSearch(): void {
     const route = this.vehicleType === 'used' ? '/User/buy-second-hand' : '/User/buy-new-car';

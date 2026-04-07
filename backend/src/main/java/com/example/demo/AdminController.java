@@ -3,9 +3,9 @@ package com.example.demo;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import jakarta.validation.Valid;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,42 +16,34 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/admin")
-@CrossOrigin("http://localhost:4200/")
+@Validated
 public class AdminController {
+    private final AdminService adminService;
+    private final AdminServicee authService;
 
-	@Autowired
-	AdminService as;
-	
-	@PostMapping("/saveAdminInfo")
-	public ResponseEntity<Admin> one(@RequestBody Admin a1)
-	{
-		return as.register(a1);
-	}
-	
-	@GetMapping("/fetchAdmin")
-	public List<Admin> two()
-	{
-		return as.getallAdmins();
-	}
-	
-	@DeleteMapping("/del/{aname}")
-	public String three(@PathVariable String aname)
-	{
-		 String x=as.deldata(aname);
-		 return x;
-	}    
-	
-	@Autowired
-	AdminServicee service;
-	 @PostMapping("/login")
-	    public ResponseEntity<?> login(@RequestBody Map<String, String> request)
-	 {
-	        String token = service.login(request.get("aemail"), request.get("apass"));
-	        return ResponseEntity.ok(Map.of("token", token));
-	    }
-	
-	
-	
-	
-	
+    public AdminController(AdminService adminService, AdminServicee authService) {
+        this.adminService = adminService;
+        this.authService = authService;
+    }
+
+    @PostMapping("/saveAdminInfo")
+    public ResponseEntity<?> register(@Valid @RequestBody AdminRegistrationRequest request) {
+        return adminService.register(request);
+    }
+
+    @GetMapping("/fetchAdmin")
+    public List<Admin> getAdmins() {
+        return adminService.getallAdmins();
+    }
+
+    @DeleteMapping("/del/{aname}")
+    public String deleteAdmin(@PathVariable String aname) {
+        return adminService.deldata(aname);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@Valid @RequestBody AdminLoginRequest request) {
+        String token = authService.login(request.getAemail(), request.getApass());
+        return ResponseEntity.ok(Map.of("token", token));
+    }
 }
