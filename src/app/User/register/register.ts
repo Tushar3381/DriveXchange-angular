@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -104,9 +104,29 @@ showConfirmPassword = false;
         },
         error: (err) => {
           this.loading = false;
-          this.errorMessage = err.error || "Registration failed";
+          this.errorMessage = this.getRegistrationErrorMessage(err);
         }
       });
+  }
+
+  private getRegistrationErrorMessage(err: HttpErrorResponse): string {
+    if (err.status === 0) {
+      return 'Cannot connect to the server. Please check that the backend is running and the app URL is allowed by CORS.';
+    }
+
+    if (typeof err.error === 'string' && err.error.trim()) {
+      return err.error;
+    }
+
+    if (err.error?.message) {
+      return err.error.message;
+    }
+
+    if (err.message) {
+      return err.message;
+    }
+
+    return 'Registration failed. Please try again.';
   }
 
   goBack(): void {

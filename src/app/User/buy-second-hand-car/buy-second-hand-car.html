@@ -1,7 +1,13 @@
 <section class="used-shell">
   <header class="used-hero">
-    <p>Used Car Marketplace</p>
-    <h1>Quality-checked pre-owned cars, ready for your next move.</h1>
+    <div>
+      <p>Used Car Marketplace</p>
+      <h1>Quality-checked pre-owned cars, ready for your next move.</h1>
+    </div>
+    <div class="used-hero__stats">
+      <span>Approved listings</span>
+      <strong>{{ cars.length }}</strong>
+    </div>
   </header>
 
   <section class="used-filters">
@@ -32,16 +38,23 @@
     </div>
   </section>
 
-  <p class="result-count">{{ filteredCars.length }} cars available</p>
+  <div class="used-toolbar">
+    <p class="result-count">{{ filteredCars.length }} cars available</p>
+    <a routerLink="/User/sellcar">List your car</a>
+  </div>
 
   <section class="used-grid" *ngIf="filteredCars.length; else emptyState">
     <article class="used-card" *ngFor="let car of filteredCars">
       <div class="used-card__media">
         <img [src]="getFirstImage(car.images)" alt="Used car image" />
+        <span>{{ car.year || 'Verified' }}</span>
       </div>
 
       <div class="used-card__body">
-        <h3>{{ car.brand }} {{ car.model }}</h3>
+        <div class="used-card__title">
+          <h3>{{ car.brand }} {{ car.model }}</h3>
+          <small>{{ car.fuelType }}</small>
+        </div>
         <p>
           <strong>Year:</strong> {{ car.year }}
           <span class="dot"></span>

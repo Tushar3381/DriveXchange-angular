@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 import { SellCarService } from '../../service/sell-car.Service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MEDIA_ENDPOINTS } from '../../core/api.config';
 
 @Component({
   selector: 'app-buy-second-hand-car',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './buy-second-hand-car.html',
   styleUrl: './buy-second-hand-car.css'
 })

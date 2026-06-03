@@ -5,6 +5,11 @@
       <h1>Explore brand-new cars with verified details.</h1>
       <p>Filter by budget and compare options before booking your next test drive.</p>
     </div>
+    <div class="hero-badges" aria-label="Marketplace highlights">
+      <span>Verified dealers</span>
+      <span>Instant shortlist</span>
+      <span>Easy test drives</span>
+    </div>
   </header>
 
   <section class="filter-bar">
@@ -34,18 +39,44 @@
     </div>
   </section>
 
-  <p class="result-count">{{ filteredCars.length }} cars found</p>
+  <div class="listing-toolbar">
+    <p class="result-count">{{ filteredCars.length }} cars found</p>
+    <div class="listing-toolbar__links">
+      <a routerLink="/User/user-profile">View profile cart</a>
+      <a routerLink="/User/sellcar">Selling instead?</a>
+    </div>
+  </div>
+
+  <p class="cart-toast" *ngIf="cartMessage">{{ cartMessage }}</p>
 
   <section class="listing-grid" *ngIf="filteredCars.length; else noResults">
     <article class="car-card" *ngFor="let car of filteredCars">
       <div class="car-card__media">
         <img [src]="uploadsBase + '/' + car.imageUrl" alt="Car image" />
+        <span class="media-chip">New arrival</span>
       </div>
 
       <div class="car-card__body">
-        <h3>{{ car.brand }} {{ car.model }}</h3>
+        <div class="car-card__title">
+          <h3>{{ car.brand }} {{ car.model }}</h3>
+          <span>In stock</span>
+        </div>
         <p class="price">₹{{ car.price | number }}</p>
-        <button type="button" (click)="viewDetails(car.id)">View Details</button>
+        <div class="spec-row">
+          <span>{{ car.color || 'Color TBD' }}</span>
+          <span>Brand warranty</span>
+        </div>
+        <div class="card-actions">
+          <button type="button" class="details-btn" (click)="viewDetails(car.id)">View Details</button>
+          <button
+            type="button"
+            class="cart-btn"
+            [class.is-added]="isInCart(car.id)"
+            (click)="addToCart(car)"
+          >
+            {{ isInCart(car.id) ? 'Added' : 'Add to Cart' }}
+          </button>
+        </div>
       </div>
     </article>
   </section>

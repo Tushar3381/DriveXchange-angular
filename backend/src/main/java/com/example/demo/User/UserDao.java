@@ -71,7 +71,10 @@ public class UserDao implements UserService {
 
         existing.setName(user.getName());
         existing.setContactnumber(user.getContactnumber());
-        existing.setProfileImage(user.getProfileImage());
+
+        if (user.getProfileImage() != null) {
+            existing.setProfileImage(user.getProfileImage());
+        }
 
         ur.save(existing);
 

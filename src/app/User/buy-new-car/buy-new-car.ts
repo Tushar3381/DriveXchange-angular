@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { BuyNewCarService } from '../../service/buy-new-car-service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MEDIA_ENDPOINTS } from '../../core/api.config';
+import { CartService } from '../../service/cart.service';
 
 @Component({
   selector: 'app-buy-new-car',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './buy-new-car.html',
   styleUrl: './buy-new-car.css'
 })
@@ -18,11 +19,13 @@ export class BuyNewCarComponent implements OnInit {
   searchTerm = '';
   budgetFilter = 'all';
   sortBy = 'default';
+  cartMessage = '';
   readonly uploadsBase = MEDIA_ENDPOINTS.uploads;
 
   constructor(
     private carService: BuyNewCarService,
-    private router: Router
+    private router: Router,
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -71,5 +74,20 @@ export class BuyNewCarComponent implements OnInit {
   viewDetails(id: number) {
   this.router.navigate(['/User/buy-new-car', id]);
 }
+
+  addToCart(car: any): void {
+    const added = this.cartService.addCar(car);
+    this.cartMessage = added
+      ? `${car.brand} ${car.model} added to your profile cart.`
+      : `${car.brand} ${car.model} is already in your profile cart.`;
+
+    setTimeout(() => {
+      this.cartMessage = '';
+    }, 2400);
+  }
+
+  isInCart(id: number): boolean {
+    return this.cartService.isInCart(id);
+  }
 
 }

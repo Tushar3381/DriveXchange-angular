@@ -1,71 +1,94 @@
-<div class="sell-container container mt-5">
+<section class="sell-shell">
+  <aside class="sell-hero">
+    <p>Seller Studio</p>
+    <h1>Present your car like a premium listing.</h1>
+    <p class="sell-hero__copy">
+      Add the essential details, upload sharp photos, and send your vehicle for DriveXchange approval.
+    </p>
 
-  <div class="card sell-card shadow-lg p-4">
-    <h2 class="text-center mb-4 title">Sell Your Car</h2>
+    <div class="sell-steps">
+      <article>
+        <span>01</span>
+        <strong>Add details</strong>
+        <small>Owner, model, year, fuel and expected price.</small>
+      </article>
+      <article>
+        <span>02</span>
+        <strong>Upload photos</strong>
+        <small>Multiple images help buyers trust the listing.</small>
+      </article>
+      <article>
+        <span>03</span>
+        <strong>Get approved</strong>
+        <small>Admin review keeps marketplace quality high.</small>
+      </article>
+    </div>
+  </aside>
+
+  <article class="sell-card">
+    <header>
+      <p>Vehicle Listing</p>
+      <h2>Sell Your Car</h2>
+    </header>
 
     <form (ngSubmit)="sellCar()">
+      <div class="form-grid">
+        <label>
+          Owner Name
+          <input type="text" [(ngModel)]="ownerName" name="ownerName" placeholder="Full name" required />
+        </label>
 
-      <div class="row">
+        <label>
+          Contact Number
+          <input type="text" [(ngModel)]="contactNumber" name="contactNumber" placeholder="10-digit mobile number" required />
+        </label>
 
-        <div class="col-md-6 mb-3">
-          <label class="form-label fw-bold">Owner Name</label>
-          <input type="text" class="form-control input-box" [(ngModel)]="ownerName" name="ownerName" required />
-        </div>
+        <label>
+          Car Brand
+          <input type="text" [(ngModel)]="brand" name="brand" placeholder="e.g. Hyundai" required />
+        </label>
 
-        <div class="col-md-6 mb-3">
-          <label class="form-label fw-bold">Contact Number</label>
-          <input type="text" class="form-control input-box" [(ngModel)]="contactNumber" name="contactNumber" required />
-        </div>
+        <label>
+          Car Model
+          <input type="text" [(ngModel)]="model" name="model" placeholder="e.g. Creta" required />
+        </label>
 
-        <div class="col-md-6 mb-3">
-          <label class="form-label fw-bold">Car Brand</label>
-          <input type="text" class="form-control input-box" [(ngModel)]="brand" name="brand" required />
-        </div>
+        <label>
+          Manufacturing Year
+          <input type="number" [(ngModel)]="year" name="year" placeholder="2021" required />
+        </label>
 
-        <div class="col-md-6 mb-3">
-          <label class="form-label fw-bold">Car Model</label>
-          <input type="text" class="form-control input-box" [(ngModel)]="model" name="model" required />
-        </div>
-
-        <div class="col-md-6 mb-3">
-          <label class="form-label fw-bold">Manufacturing Year</label>
-          <input type="number" class="form-control input-box" [(ngModel)]="year" name="year" required />
-        </div>
-
-        <div class="col-md-6 mb-3">
-          <label class="form-label fw-bold">Fuel Type</label>
-          <select class="form-control input-box" [(ngModel)]="fuelType" name="fuelType" required>
-            <option value="">Select</option>
+        <label>
+          Fuel Type
+          <select [(ngModel)]="fuelType" name="fuelType" required>
+            <option value="">Select fuel type</option>
             <option value="Petrol">Petrol</option>
             <option value="Diesel">Diesel</option>
             <option value="CNG">CNG</option>
             <option value="Electric">Electric</option>
           </select>
-        </div>
+        </label>
 
-        <div class="col-md-6 mb-3">
-          <label class="form-label fw-bold">Expected Price (₹)</label>
-          <input type="number" class="form-control input-box" [(ngModel)]="price" name="price" required />
-        </div>
+        <label>
+          Expected Price (Rs.)
+          <input type="number" [(ngModel)]="price" name="price" placeholder="850000" required />
+        </label>
 
-        <div class="col-md-12 mb-3">
-          <label class="form-label fw-bold">Description</label>
-          <textarea class="form-control input-box" [(ngModel)]="description" name="description" rows="3"></textarea>
-        </div>
+        <label class="full">
+          Description
+          <textarea [(ngModel)]="description" name="description" rows="4" placeholder="Mention condition, service history, insurance, ownership and key features."></textarea>
+        </label>
 
-        <div class="col-md-12 mb-3">
-          <label class="form-label fw-bold">Upload Car Images</label>
-          <input type="file" class="form-control input-box" (change)="onImageSelected($event)" multiple required />
-          <small class="text-muted">You can upload one or multiple images</small>
-        </div>
-
+        <label class="upload-box full">
+          <span>Upload Car Images</span>
+          <input type="file" (change)="onImageSelected($event)" multiple required />
+          <small>{{ images.length ? images.length + ' image(s) selected' : 'Upload one or multiple clear images' }}</small>
+        </label>
       </div>
 
-      <button class="btn btn-success w-100 sell-btn" type="submit">
-        <i class="bi bi-upload"></i> Submit to DriveXchange
-      </button>
+      <button class="sell-btn" type="submit">Submit to DriveXchange</button>
     </form>
 
-    <p class="text-success mt-3 text-center">{{ message }}</p>
-  </div>
-</div>
+    <p class="success-message" *ngIf="message">{{ message }}</p>
+  </article>
+</section>

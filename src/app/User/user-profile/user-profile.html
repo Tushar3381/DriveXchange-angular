@@ -1,68 +1,89 @@
-<div class="container py-5">
+<section class="profile-shell">
+  <header class="profile-hero">
+    <div>
+      <p>My DriveXchange</p>
+      <h1>Profile and selected cars in one place.</h1>
+      <span>Review your account details and continue from the cars you added.</span>
+    </div>
+    <button type="button" (click)="browseNewCars()">Browse New Cars</button>
+  </header>
 
-  <!-- Page Title -->
-  <div class="text-center mb-4">
-    <h2 class="fw-bold">My Profile</h2>
-    <p class="text-muted">Manage your personal information</p>
-  </div>
-
-  <div class="row justify-content-center">
-
-    <div class="col-lg-6 col-md-8">
-
-      <div class="card shadow-sm border-0 p-4 profile-card">
-
- 
-
-        <!-- Name -->
-        <div class="mb-3">
-          <label class="form-label fw-semibold">Full Name</label>
-          <input type="text"
-                 class="form-control"
-                 [(ngModel)]="user.name">
+  <section class="profile-grid">
+    <article class="profile-card">
+      <header>
+        <label class="avatar-picker" aria-label="Upload profile picture">
+          <img *ngIf="user.profileImage; else initialsAvatar" [src]="user.profileImage" alt="Profile picture" />
+          <ng-template #initialsAvatar>
+            <span>{{ profileInitials }}</span>
+          </ng-template>
+          <input type="file" accept="image/*" (change)="onFileSelected($event)" />
+          <small>Change</small>
+        </label>
+        <div>
+          <p>Account Details</p>
+          <h2>{{ user.name || 'User Profile' }}</h2>
         </div>
+      </header>
 
-        <!-- Email -->
-        <div class="mb-3">
-          <label class="form-label fw-semibold">Email Address</label>
-          <input type="text"
-                 class="form-control"
-                 [(ngModel)]="user.email"
-                 disabled>
+      <form>
+        <label>
+          Full Name
+          <input type="text" [(ngModel)]="user.name" name="name" />
+        </label>
+
+        <label>
+          Email Address
+          <input type="text" [(ngModel)]="user.email" name="email" disabled />
+        </label>
+
+        <label>
+          Contact Number
+          <input type="text" [(ngModel)]="user.contactnumber" name="contactnumber" />
+        </label>
+      </form>
+
+      <div class="profile-actions">
+        <button class="primary-btn" type="button" (click)="updateProfile()">Update Profile</button>
+        <button class="light-btn" type="button" (click)="goToChangePassword()">Change Password</button>
+        <button class="ghost-btn" type="button" (click)="backToDashboard()">Back</button>
+      </div>
+    </article>
+
+    <article class="cart-panel">
+      <header>
+        <div>
+          <p>Selected New Cars</p>
+          <h2>{{ savedCars.length }} car{{ savedCars.length === 1 ? '' : 's' }} in your profile cart</h2>
         </div>
+        <strong *ngIf="savedCars.length">Rs. {{ savedCarsTotal | number }}</strong>
+      </header>
 
-        <!-- Contact -->
-        <div class="mb-3">
-          <label class="form-label fw-semibold">Contact Number</label>
-          <input type="text"
-                 class="form-control"
-                 [(ngModel)]="user.contactnumber">
-        </div>
+      <div class="cart-list" *ngIf="savedCars.length; else emptyCart">
+        <article class="saved-car" *ngFor="let car of savedCars">
+          <img [src]="car.imageUrl || '/car1.jpg'" [alt]="car.brand + ' ' + car.model" />
 
-        <!-- Buttons -->
-        <div class="d-flex flex-wrap gap-2 mt-4">
+          <div class="saved-car__content">
+            <div>
+              <h3>{{ car.brand }} {{ car.model }}</h3>
+              <p>{{ car.color || 'Color TBD' }} / New car</p>
+            </div>
+            <strong>Rs. {{ car.price | number }}</strong>
+          </div>
 
-          <button class="btn btn-success px-4"
-                  (click)="updateProfile()">
-            Update Profile
-          </button>
-
-          <button class="btn btn-outline-primary px-4"
-                  (click)="goToChangePassword()">
-            Change Password
-          </button>
-
-          <button class="btn btn-secondary px-4"
-                  (click)="backToDashboard()">
-            Back
-          </button>
-
-        </div>
-
+          <div class="saved-car__actions">
+            <button type="button" (click)="viewCarDetails(car.id)">View</button>
+            <button type="button" class="remove-btn" (click)="removeSavedCar(car.id)">Remove</button>
+          </div>
+        </article>
       </div>
 
-    </div>
-
-  </div>
-
-</div>
+      <ng-template #emptyCart>
+        <section class="empty-cart">
+          <h3>No cars added yet.</h3>
+          <p>Add new cars to your profile cart and compare them here before booking or buying.</p>
+          <button type="button" (click)="browseNewCars()">Explore Cars</button>
+        </section>
+      </ng-template>
+    </article>
+  </section>
+</section>
